@@ -1,5 +1,6 @@
 import unittest
 
+
 class TestQuickhull(unittest.TestCase):
 
     def test_minimum_three_coordinates_required(self):
@@ -38,7 +39,7 @@ class TestQuickhull(unittest.TestCase):
         Unit test to verify that all coordinates lie either within the
         convex hull, or on its boundary.
         """
-        # TO DO                
+        # TO DO
 
 
 if __name__ == "__main__":
