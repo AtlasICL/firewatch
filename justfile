@@ -3,8 +3,9 @@ default:
 
 # Format files
 fix:
-    ruff check --fix .
+    -ruff check --fix .
     ruff format .
+    ruff check .
 
 # Check linting and formatting (read-only)
 check:
