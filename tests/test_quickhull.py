@@ -2,7 +2,6 @@ import unittest
 
 
 class TestQuickhull(unittest.TestCase):
-
     def test_minimum_three_coordinates_required(self):
         """
         Unit test to verify that a minimum of three coordinates are
