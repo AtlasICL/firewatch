@@ -1,18 +1,14 @@
-from src.point import Point
+from src.point import HullInput, Point
 
 
-def _find_leftmost_point_in(points: list[Point]) -> Point:
+def _find_leftmost_point_in(points: HullInput) -> Point:
     """Finds the leftmost point in the given set."""
-    if not points:
-        raise RuntimeError("Attempted to find leftmost point of empty set.")
-    return min(points, key=lambda point: (point.x, point.y))
+    return min(points.points, key=lambda point: (point.x, point.y))
 
 
-def _find_rightmost_point_in(points: list[Point]) -> Point:
+def _find_rightmost_point_in(points: HullInput) -> Point:
     """Finds the rightmost point in the given set."""
-    if not points:
-        raise RuntimeError("Attempted to find rightmost point of empty set.")
-    return max(points, key=lambda point: (point.x, point.y))
+    return max(points.points, key=lambda point: (point.x, point.y))
 
 
 def _cross_product(
@@ -79,9 +75,11 @@ def _quickhull_recurse(
     )
 
 
-def quickhull(points: list[Point]) -> list[Point]:
+def quickhull(points: HullInput) -> list[Point]:
     """
-    Quickhull algorithm.
+    Quickhull algorithm. Given a set of at least 2 distinct points,
+    returns the ordered list of points (subset of the input) which form
+    its convex hull.
 
     Args:
         `points`: The set of points whose convex hull to calculate.
@@ -93,18 +91,16 @@ def quickhull(points: list[Point]) -> list[Point]:
     leftmost_point: Point = _find_leftmost_point_in(points)
     rightmost_point: Point = _find_rightmost_point_in(points)
 
-    convex_hull: list[Point] = [leftmost_point, rightmost_point]
-    print(convex_hull)
-
+    # Divide into two sub-problems: the points either side of the
+    # original line => divide and conquer.
     points_above_initial_line = [
         point
-        for point in points
+        for point in points.points
         if _cross_product(leftmost_point, rightmost_point, point) > 0
     ]
-
     points_below_initial_line = [
         point
-        for point in points
+        for point in points.points
         if _cross_product(leftmost_point, rightmost_point, point) < 0
     ]
 
