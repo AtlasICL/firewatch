@@ -43,13 +43,14 @@ const hullCoordinates = [
         return;
       }
 
-      // Display new coordinates
       points.forEach(point => {
           L.circleMarker(point, {
               radius: 2,
               color: 'red',
           }).addTo(markers);
       });
+
+      map.fitBounds(points);
 
       console.log(`${points.length} coordinates plotted!`);
   });
