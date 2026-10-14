@@ -4,8 +4,8 @@
 | ---------------------- | -------------------- |
 | **Project title**      | Satellite Fire Watch |
 | **Selected algorithm** | Quickhull            |
-| **Problem statement**  | TODO                 |
-| **Intended users**     | TODO                 |
+| **Problem statement**  | Given a set of raw coordinate data from fire monitoring satellites, identify the convex hull (which represents the surface area at risk) |
+| **Intended users**     | Fire departments in affected areas, wildfire researchers |
 
 
 ### URL
@@ -17,7 +17,10 @@ The website is live at [link](https://google.com)
 
 ### Testing
 
-@LP TODO
+Run our Python test suite using
+```
+python3 -m unittest
+```
 
 ### Pseudocode
 

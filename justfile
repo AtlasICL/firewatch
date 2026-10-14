@@ -14,4 +14,4 @@ check:
 
 # Run all tests
 test:
-    python3 -m unittest -v
+    python3 -m unittest
