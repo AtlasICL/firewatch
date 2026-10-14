@@ -1,6 +1,6 @@
 import unittest
 
-from src.point import Point
+from src.point import HullInput, Point
 from src.quickhull import quickhull
 
 
@@ -15,41 +15,31 @@ def _is_same_cycle(hull: list[Point], expected: list[Point]) -> bool:
 
 
 class TestQuickhull(unittest.TestCase):
-    def test_minimum_three_coordinates_required(self):
-        """
-        Unit test to verify that a minimum of three coordinates are
-        required to form a convex hull.
-        If the coordinate total is less than 3, the appropriate
-        exception should be thrown.
-        """
-        # TODO
-
     def test_minimum_x_is_furthest_west_point(self):
         """
-        Unit test to verify that the point min_x chosen by the
-        algorithm is the coordinate that lies furthest west.
+        Point min_x chosen by the algorithm is the coordinate that lies
+        furthest west.
         """
         # TODO
 
     def test_maximum_x_is_furthest_east_point(self):
         """
-        Unit test to verify that the point max_x chosen by the
-        algorithm is the coordinate that lies furthest east.
+        Point max_x chosen by the algorithm is the coordinate that lies
+        furthest east.
         """
         # TODO
 
     def test_p_is_furthest_point_from_minmax_line(self):
         """
-        Unit test to verify that the point p chosen by the
-        algorithm is the coordinate that lies furthest from the
-        straight line formed between min_x and max_x.
+        Point p chosen by the algorithm is the coordinate that lies
+        furthest from the straight line formed between min_x and max_x.
         """
         # TODO
 
     def test_all_coordinates_lie_in_convex_hull_boundary(self):
         """
-        Unit test to verify that all coordinates lie either within the
-        convex hull, or on its boundary.
+        All coordinates lie either within the convex hull, or on its
+        boundary.
         """
         # TODO
 
@@ -94,7 +84,7 @@ class TestQuickhull(unittest.TestCase):
         ]
         expected_hull = [c, b, a, h, g, f, e, d]
 
-        hull = quickhull(points)
+        hull = quickhull(HullInput(points))
 
         self.assertCountEqual(hull, expected_hull)
         self.assertTrue(
