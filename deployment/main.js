@@ -17,3 +17,39 @@ const hullCoordinates = [
   }).addTo(map);
 
   map.fitBounds(polygon.getBounds(), { padding: [40, 40] });
+
+  const markers = L.layerGroup().addTo(map);
+
+  document.getElementById('plotButton').addEventListener('click', () => {
+      const input = document.getElementById('coordinates').value;
+      const points = [];
+
+      // Reads each coordinate line-by-line, separate arrays for each
+      input.trim().split('\n').forEach(line => {
+          const values = line.split(',').map(Number);
+
+          if (
+            values.length === 2 &&
+            // 0 = latitude, 1 = longitude
+            values[0] >= -90 && values[0] <= 90 &&
+            values[1] >= -180 && values[1] <= 180
+          ) {
+              points.push(values);
+          }
+      });
+
+      if (points.length === 0) {
+        alert('Please enter valid coordinates!');
+        return;
+      }
+
+      // Display new coordinates
+      points.forEach(point => {
+          L.circleMarker(point, {
+              radius: 2,
+              color: 'red',
+          }).addTo(markers);
+      });
+
+      console.log(`${points.length} coordinates plotted!`);
+  });
