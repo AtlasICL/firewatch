@@ -56,20 +56,14 @@
 
 
       <div id="controls">
-          <h3>Enter Fire Coordinates</h3>
-
-          <textarea
-              id="coordinates"
-              rows="6"
-              placeholder="Latitude, Longitude (one pair per line)"
-          ></textarea>
-
-          <button id="plotButton">Plot Coordinates</button>
+          <h3>Upload Fire Coordinates</h3>
+          <input type="file" id="fileInput" class="hidden" accept=.csv,text/csv>
+          <button id="uploadButton">Upload File</button>
       </div>
 
       <div id="map"></div>
     </main>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="main.js"></script>
+  <script type="module" src="main.js"></script>
   </body>
 </html>
