@@ -18,12 +18,20 @@ def generate_url(event, context):
         filename = body.get('filename', 'data.csv')
         file_id = str(uuid.uuid4())
         s3_key = f"{file_id}/{filename}"
-        presigned_url = s3_client.generate_presigned_url(
+        presigned_upload_url = s3_client.generate_presigned_url(
             ClientMethod='put_object',
             Params={
                 'Bucket': BUCKET_NAME,
                 'Key': s3_key,
                 'ContentType': "text/csv"
+            },
+            ExpiresIn=900
+        )
+        presigned_download_url = s3_client.generate_presigned_url(
+            ClientMethod='get_object',
+            Params={
+                'Bucket': BUCKET_NAME,
+                'Key': s3_key
             },
             ExpiresIn=900
         )
@@ -34,7 +42,8 @@ def generate_url(event, context):
                 "Access-Control-Allow-Origin": "*"
             },
             "body": json.dumps({
-                "uploadUrl": presigned_url,
+                "uploadUrl": presigned_upload_url,
+                "downloadUrl": presigned_download_url,
                 "fileId": file_id,
                 "s3Key": s3_key
             })
