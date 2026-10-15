@@ -22,7 +22,7 @@ if (fileInput) {
 const uploadButton = document.getElementById('uploadButton');
 if (uploadButton) {
     uploadButton.addEventListener('click', async () => {
-        const {fileId, s3Key, content} = await uploadDownloadFile(file);
+        const {_fileId, _s3Key, content} = await uploadDownloadFile(file);
         alert(content)
         //insert quickhull functionality here
     });
