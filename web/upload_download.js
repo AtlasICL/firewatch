@@ -8,50 +8,54 @@
 /**
  * Gets S3 presigned URLS Sends a file to S3, then redownloads it.
  * Quickhull function needed.
- * 
+ *
  * @param {File} file - The CSV file selected by the user.
- * @param {string} apiEndpoint 
- * [apiEndpoint='https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url'] 
+ * @param {string} apiEndpoint
+ * [apiEndpoint='https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url']
  * - API gateway handling incoming/outgoing file requests.
  * @returns {Promise<UploadDownloadResult>} - Object returning upload/download data.
  * @throws {Error} - Error relating to failed S3 upload/download.
  */
-export async function uploadDownloadFile(file, 
-    apiEndpoint='https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url'){
-    //Get download/upload URLs from api endpoint response
-    const presignResponse = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({filename: file.name})
-    });
-    
-    if(!presignResponse.ok){ //s3 URL get
-        throw new Error('Failed to get S3 URL');
-    }
-    const{uploadUrl, downloadUrl, fileId, s3Key} = await presignResponse.json();
-    //Attempt S3 upload
-    const uploadResponse = await fetch(uploadUrl, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'text/csv' },
-        body: file
-    });
+export async function uploadDownloadFile(
+  file,
+  apiEndpoint = "https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url",
+) {
+  //Get download/upload URLs from api endpoint response
+  const presignResponse = await fetch(apiEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ filename: file.name }),
+  });
 
-    if(!uploadResponse.ok){
-        throw new Error('S3 upload failed');
-    }
-    //Attempt S3 download
-    const downloadResponse = await fetch(downloadUrl);
+  if (!presignResponse.ok) {
+    //s3 URL get
+    throw new Error("Failed to get S3 URL");
+  }
+  const { uploadUrl, downloadUrl, fileId, s3Key } =
+    await presignResponse.json();
+  //Attempt S3 upload
+  const uploadResponse = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "text/csv" },
+    body: file,
+  });
 
-    if (!downloadResponse.ok){
-        throw new Error('S3 download failed');
-    }
-    const content = await downloadResponse.text();
-    
-    return{
-        fileId,
-        s3Key,
-        content
-    };
+  if (!uploadResponse.ok) {
+    throw new Error("S3 upload failed");
+  }
+  //Attempt S3 download
+  const downloadResponse = await fetch(downloadUrl);
+
+  if (!downloadResponse.ok) {
+    throw new Error("S3 download failed");
+  }
+  const content = await downloadResponse.text();
+
+  return {
+    fileId,
+    s3Key,
+    content,
+  };
 }
 
 export default uploadDownloadFile;
