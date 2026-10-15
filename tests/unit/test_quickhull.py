@@ -1,96 +1,82 @@
 import unittest
 
 from src.point import HullInput, Point
-from src.quickhull import quickhull
-
-
-def _is_same_cycle(hull: list[Point], expected: list[Point]) -> bool:
-    """
-    Checks whether `hull` lists the same points as `expected` in the
-    same cyclic order. It may start at any vertex and run in either
-    direction.
-    """
-    rotations = [expected[i:] + expected[:i] for i in range(len(expected))]
-    return hull in rotations or hull[::-1] in rotations
+from src.quickhull import (
+    _cross_product,
+    _farthest_point,
+    _find_leftmost_point_in,
+    _find_rightmost_point_in,
+)
+from tests.resources.test_data import typical_test_datasets
 
 
 class TestQuickhull(unittest.TestCase):
-    def test_minimum_x_is_furthest_west_point(self):
+    def setUp(self):
         """
-        Point min_x chosen by the algorithm is the coordinate that lies
-        furthest west.
+        Transforms the list of typical test datasets into a list of
+        iterable HullInput objects.
         """
-        # TODO
+        self.test_cases: list[HullInput] = []
+        for test_dataset in typical_test_datasets:
+            self.test_cases.append(HullInput(test_dataset))
 
-    def test_maximum_x_is_furthest_east_point(self):
+    def test_leftmost_point_has_minimum_x_coordinate(self):
         """
-        Point max_x chosen by the algorithm is the coordinate that lies
-        furthest east.
+        The leftmost point chosen by the algorithm is the Point object
+        with the minimum x coordinate.
         """
-        # TODO
+        expected_outputs = [55.4245, 51.1398, 50.4169, 54.8026]
+        for expected, test_case in zip(expected_outputs, self.test_cases):
+            self.assertEqual(
+                expected,
+                _find_leftmost_point_in(test_case).x,
+            )
 
-    def test_p_is_furthest_point_from_minmax_line(self):
+    def test_rightmost_point_has_maximum_x_coordinate(self):
         """
-        Point p chosen by the algorithm is the coordinate that lies
-        furthest from the straight line formed between min_x and max_x.
+        The rightmost point chosen by the algorithm is the Point object
+        with the maximum x coordinate.
         """
-        # TODO
+        expected_outputs = [57.4624, 52.0173, 52.9985, 55.5164]
+        for expected, test_case in zip(expected_outputs, self.test_cases):
+            self.assertEqual(
+                expected,
+                _find_rightmost_point_in(test_case).x,
+            )
 
-    def test_all_coordinates_lie_in_convex_hull_boundary(self):
+    def test_cross_product_of_two_vectors_calculated_correctly(self):
         """
-        All coordinates lie either within the convex hull, or on its
-        boundary.
+        The cross product of two vectors AB and AC should be calculated
+        according to the cross product formula.
         """
-        # TODO
+        expected_outputs = [-0.1335, 0.0025, 0.1011, 0.1449]
+        for expected, test_case in zip(expected_outputs, self.test_cases):
+            a: Point = test_case.points[0]
+            b: Point = test_case.points[1]
+            c: Point = test_case.points[2]
+            self.assertEqual(
+                expected,
+                round(_cross_product(a, b, c), 4),
+            )
 
-    def test_hull_of_mixed_point_set(self):
+    def test_farthest_point_from_segment_calculated_correctly(self):
         """
-        Sample test case for quickhull, taken from the explanatory
-        visual graph in ../img/
+        The farthest point on the graph from the segment [AB] should
+        be returned.
         """
-        a = Point(-2, -1)
-        b = Point(-4, 1)
-        c = Point(-5, 3)
-        d = Point(-3, 5)
-        e = Point(2, 5)
-        f = Point(6, 3)
-        g = Point(6, 0)
-        h = Point(5, -2)
-
-        points = [
-            a,
-            b,
-            c,
-            d,
-            e,
-            f,
-            g,
-            h,
-            Point(1, 0),
-            Point(2, 3),
-            Point(2, 0.5),
-            Point(1, 4),
-            Point(-3, 1),
-            Point(1, -1),
-            Point(-2, 2.5),
-            Point(0, 3),
-            Point(-0.5, 0.5),
-            Point(-2, 4),
-            Point(4, 2),
-            Point(4, 1),
-            Point(1, 1.5),
-            Point(3.5, -1),
-            Point(-1, 4.5),
+        expected_outputs = [
+            Point(55.5164, -2.088),
+            Point(51.9744, -4.7628),
+            Point(52.9985, -4.2297),
+            Point(55.5164, -2.088),
         ]
-        expected_hull = [c, b, a, h, g, f, e, d]
-
-        hull = quickhull(HullInput(points))
-
-        self.assertCountEqual(hull, expected_hull)
-        self.assertTrue(
-            _is_same_cycle(hull, expected_hull),
-            f"Hull vertices are out of order. See below:\n{hull}",
-        )
+        for expected, test_case in zip(expected_outputs, self.test_cases):
+            a: Point = test_case.points[0]
+            b: Point = test_case.points[1]
+            self.assertEqual(
+                expected,
+                _farthest_point(a, b, test_case.points),
+            )
 
 
 if __name__ == "__main__":
