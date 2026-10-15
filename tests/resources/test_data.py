@@ -1,12 +1,28 @@
 from src.point import Point
 
-test_cases: list[list[Point]] = [
+erroneous_test_datasets: list[list[Point]] = [
+    # Empty list
+    [],
+    # North-east Scotland
+    [
+        Point(56.9148, -2.9096),
+    ],
+]
+
+boundary_test_datasets: list[list[Point]] = [
     # North-east Scotland
     [
         Point(56.9148, -2.9096),
         Point(57.186, -2.8699),
-        Point(56.9109, -2.89),
     ],
+    # Central and North Scotland
+    [
+        Point(56.5211, -3.8046),
+        Point(55.9308, -3.9848),
+    ],
+]
+
+typical_test_datasets: list[list[Point]] = [
     # Central and North Scotland
     [
         Point(56.5211, -3.8046),
