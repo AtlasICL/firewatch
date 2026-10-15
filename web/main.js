@@ -1,4 +1,3 @@
-//TODO: add commenting
 import { uploadDownloadFile} from './upload_download.js';
 
 // Initialise map instance, with initial view of London
