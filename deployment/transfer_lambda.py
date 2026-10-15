@@ -15,7 +15,7 @@ s3_client = boto3.client(
 # Fixed upload bucket name.
 BUCKET_NAME = "s3-upload-bucket-firewatch"
 """
-Lambda function for getting presigned URLs for download and upload 
+Lambda function for getting presigned URLs for download and upload
 for firewatch csvs.
 
 Args:
