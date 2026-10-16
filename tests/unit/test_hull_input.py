@@ -3,7 +3,7 @@ import unittest
 from src.point import HullInput, Point
 
 
-class TestQuickhull(unittest.TestCase):
+class TestHullInput(unittest.TestCase):
     def test_cannot_create_hullinput_with_fewer_than_two_distinct_points(self):
         """
         Unit test to verify that an instance of the `HullInput` class

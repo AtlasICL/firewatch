@@ -1,3 +1,4 @@
+import itertools
 import unittest
 
 from src.point import HullInput, Point
@@ -20,33 +21,33 @@ class TestQuickhull(unittest.TestCase):
         Point min_x chosen by the algorithm is the coordinate that lies
         furthest west.
         """
-        # TODO
+        self.skipTest("TODO")
 
     def test_maximum_x_is_furthest_east_point(self):
         """
         Point max_x chosen by the algorithm is the coordinate that lies
         furthest east.
         """
-        # TODO
+        self.skipTest("TODO")
 
     def test_p_is_furthest_point_from_minmax_line(self):
         """
         Point p chosen by the algorithm is the coordinate that lies
         furthest from the straight line formed between min_x and max_x.
         """
-        # TODO
+        self.skipTest("TODO")
 
     def test_all_coordinates_lie_in_convex_hull_boundary(self):
         """
         All coordinates lie either within the convex hull, or on its
         boundary.
         """
-        # TODO
+        self.skipTest("TODO")
 
     def test_hull_of_mixed_point_set(self):
         """
         Sample test case for quickhull, taken from the explanatory
-        visual graph in ../img/
+        visual graph in ../../img/example_output/
         """
         a = Point(-2, -1)
         b = Point(-4, 1)
@@ -91,6 +92,22 @@ class TestQuickhull(unittest.TestCase):
             _is_same_cycle(hull, expected_hull),
             f"Hull vertices are out of order. See below:\n{hull}",
         )
+
+    def test_hull_excludes_edge_points_in_any_input_order(self):
+        """
+        When several points tie as farthest from a line, only the
+        corners are on the hull. A point lying partway along a hull
+        edge must be left out, whatever order the input is given in.
+        """
+        corners = [Point(0, 0), Point(1, 2), Point(3, 2), Point(4, 0)]
+        edge_point = Point(2, 2)
+
+        for points in itertools.permutations([*corners, edge_point]):
+            with self.subTest(points=points):
+                hull = quickhull(HullInput(points))
+
+                self.assertCountEqual(hull, corners)
+                self.assertTrue(_is_same_cycle(hull, corners))
 
 
 if __name__ == "__main__":
