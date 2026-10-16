@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Firewatch</title>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+
+
+      <div id="controls">
+          <h3>Upload Fire Coordinates</h3>
+          <input type="file" id="fileInput" class="hidden" accept=.csv,text/csv>
+          <button id="uploadButton">Upload File</button>
+      </div>
+
+      <div id="map"></div>
+    </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="main.js"></script>
+  </body>
+</html>
