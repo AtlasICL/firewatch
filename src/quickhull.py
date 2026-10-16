@@ -20,13 +20,34 @@ def _cross_product(
     return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)
 
 
+def _dot_product(
+    a: Point,
+    b: Point,
+    c: Point,
+) -> float:
+    """Finds the dot product of vectors AB and AC."""
+    return (b.x - a.x) * (c.x - a.x) + (b.y - a.y) * (c.y - a.y)
+
+
 def _farthest_point(
     a: Point,
     b: Point,
     points: list[Point],
 ) -> Point:
-    """Finds the furthest point in `points` to the segment [AB]."""
-    return max(points, key=lambda point: abs(_cross_product(a, b, point)))
+    """
+    Finds the furthest point in `points` to the segment [AB].
+
+    Ties are broken in favour of the point closest to A along AB. Tied
+    points lie on a line parallel to AB, and only the two ends of that
+    line are hull vertices, therefore we must pick one of the "ends".
+    """
+    return max(
+        points,
+        key=lambda point: (
+            abs(_cross_product(a, b, point)),
+            -_dot_product(a, b, point),
+        ),
+    )
 
 
 def _quickhull_recurse(
@@ -35,18 +56,17 @@ def _quickhull_recurse(
     subset: list[Point],
 ) -> list[Point]:
     """
-    Recursive part of the algorithm. A and B are the intial extrema.
-    This function completes the convex hull on one side of [AB]. It does
-    so by recursing.
+    Recursive part of the algorithm. Completes the convex hull on the
+    LHS of the directed segment [AB].
 
     Args:
-        `a`: One extremity of the initial line.
-        `b`: The other extremity of the initial line.
-        `subset`: The subset of the original set of points upon which
-        the initial recursion is called.
+        `a`: Start of the segment, already known to be on the hull.
+        `b`: End of the segment, already known to be on the hull.
+        `subset`: The points lying strictly to the left of [AB].
 
     Returns:
-        The convex hull of subset (which evidently includes A and B).
+        The hull vertices (excluding A and B) lying strictly to the
+        left of [AB], (ordered A to B).
     """
 
     # Base case.
