@@ -3,51 +3,19 @@ import unittest
 
 from src.point import HullInput, Point
 from src.quickhull import quickhull
+from tests.resources.hull_checks import HullTestCase
 
 
-def _is_same_cycle(hull: list[Point], expected: list[Point]) -> bool:
+class TestHullKnownCases(HullTestCase):
     """
-    Checks whether `hull` lists the same points as `expected` in the
-    same cyclic order. It may start at any vertex and run in either
-    direction.
+    Manually created inputs, known hulls.
+    Each test should `assertCountEqual` and `assert_same_cycle`.
     """
-    rotations = [expected[i:] + expected[:i] for i in range(len(expected))]
-    return hull in rotations or hull[::-1] in rotations
-
-
-class TestQuickhull(unittest.TestCase):
-    def test_minimum_x_is_furthest_west_point(self):
-        """
-        Point min_x chosen by the algorithm is the coordinate that lies
-        furthest west.
-        """
-        self.skipTest("TODO")
-
-    def test_maximum_x_is_furthest_east_point(self):
-        """
-        Point max_x chosen by the algorithm is the coordinate that lies
-        furthest east.
-        """
-        self.skipTest("TODO")
-
-    def test_p_is_furthest_point_from_minmax_line(self):
-        """
-        Point p chosen by the algorithm is the coordinate that lies
-        furthest from the straight line formed between min_x and max_x.
-        """
-        self.skipTest("TODO")
-
-    def test_all_coordinates_lie_in_convex_hull_boundary(self):
-        """
-        All coordinates lie either within the convex hull, or on its
-        boundary.
-        """
-        self.skipTest("TODO")
 
     def test_hull_of_mixed_point_set(self):
         """
-        Sample test case for quickhull, taken from the explanatory
-        visual graph in ../../img/example_output/
+        Worked example matching the explanatory diagrams in
+        `../../img/example_output/`.
         """
         a = Point(-2, -1)
         b = Point(-4, 1)
@@ -88,10 +56,7 @@ class TestQuickhull(unittest.TestCase):
         hull = quickhull(HullInput(points))
 
         self.assertCountEqual(hull, expected_hull)
-        self.assertTrue(
-            _is_same_cycle(hull, expected_hull),
-            f"Hull vertices are out of order. See below:\n{hull}",
-        )
+        self.assert_same_cycle(hull, expected_hull)
 
     def test_hull_excludes_edge_points_in_any_input_order(self):
         """
@@ -107,7 +72,37 @@ class TestQuickhull(unittest.TestCase):
                 hull = quickhull(HullInput(points))
 
                 self.assertCountEqual(hull, corners)
-                self.assertTrue(_is_same_cycle(hull, corners))
+                self.assert_same_cycle(hull, corners)
+
+    def test_only_two_distinct_points(self):
+        self.skipTest("TODO")
+
+    def test_two_points_with_duplicates(self):
+        self.skipTest("TODO")
+
+    def test_triangle(self):
+        self.skipTest("TODO")
+
+    def test_square_with_point_inside(self):
+        self.skipTest("TODO")
+
+    def test_horizontally_collinear_points(self):
+        self.skipTest("TODO")
+
+    def test_vertical_collinear_points(self):
+        self.skipTest("TODO")
+
+    def test_diagonally_collinear_points(self):
+        self.skipTest("TODO")
+
+    def test_multiple_points_tied_for_leftmost(self):
+        self.skipTest("TODO")
+
+    def test_multiple_points_tied_for_rightmost(self):
+        self.skipTest("TODO")
+
+    def test_negative_and_mixed_sign_coordinates(self):
+        self.skipTest("TODO")
 
 
 if __name__ == "__main__":
