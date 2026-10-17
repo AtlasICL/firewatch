@@ -1,5 +1,11 @@
 from src.point import Point
 
+erroneous_test_points: list = [
+    [45.9, "word"],
+    [78.4],
+    [],
+]
+
 erroneous_test_datasets: list[list[Point]] = [
     # Empty list
     [],

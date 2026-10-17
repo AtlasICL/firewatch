@@ -9,6 +9,16 @@ class Point:
     x: float
     y: float
 
+    def __init__(self, x=None, y=None):
+        if x is None or y is None:
+            raise ValueError("Requires an x and y value")
+        
+        if not isinstance(x, float) or not isinstance(y, float):
+            raise ValueError("x and y must be numerical")
+        
+        object.__setattr__(self, "x", x)
+        object.__setattr__(self, "y", y)
+
 
 @dataclass(frozen=True, slots=True)
 class HullInput:
@@ -17,9 +27,12 @@ class HullInput:
     points: tuple[Point, ...]
 
     def __init__(self, points: Iterable[Point]):
-        points = tuple(points)
 
-        if len(set(points)) < 2:
-            raise ValueError("At least 2 distinct points required")
+        points = tuple(points)
+        try:
+            if len(set(points)) < 2:
+                raise ValueError("At least 2 distinct points required")
+        except AttributeError:
+            raise ValueError("Invalid set of points")
 
         object.__setattr__(self, "points", points)
