@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from src.point import Point
+import pandas
 
 
 class Parser:
