@@ -4,7 +4,6 @@ import uuid
 from typing import Any
 
 import boto3
-from aws_lambda_powertools.utilities.typing import LambdaContext
 from botocore.config import Config
 
 s3_client = boto3.client(
@@ -26,32 +25,26 @@ Returns:
 """
 
 
-def generate_url(
-    event: dict[str, Any], context: LambdaContext
-) -> dict[str, Any]:
+def generate_url(event: dict[str, Any], context: Any) -> dict[str, Any]:
     try:
         # Retrieve event dictionary, instantiate related variables.
         body: dict[str, Any] = json.loads(event.get("body", "{}"))
         filename: str = body.get("filename", "data.csv")
         file_id: str = str(uuid.uuid4())  # UUID for uploaded files.
-        s3_key: str = f"{file_id}/{filename}"  # S3 key for location of file.
+        input_s3_key: str = (
+            f"{file_id}/{filename}"  # S3 key for location of file.
+        )
         # Generate upload url based on s3_key.
         presigned_upload_url: str = s3_client.generate_presigned_url(
             ClientMethod="put_object",
             Params={
                 "Bucket": BUCKET_NAME,
-                "Key": s3_key,
+                "Key": input_s3_key,
                 "ContentType": "text/csv",
             },
             ExpiresIn=900,
         )
-        # Generate download url based on s3_key.
-        presigned_download_url: str = s3_client.generate_presigned_url(
-            ClientMethod="get_object",
-            Params={"Bucket": BUCKET_NAME, "Key": s3_key},
-            ExpiresIn=900,
-        )
-        # Return URLs.
+        # Return URL.
         return {
             "statusCode": 200,
             "headers": {
@@ -60,10 +53,9 @@ def generate_url(
             },
             "body": json.dumps(
                 {
-                    "uploadUrl": presigned_upload_url,
-                    "downloadUrl": presigned_download_url,
-                    "fileId": file_id,
-                    "s3Key": s3_key,
+                    "upload_url": presigned_upload_url,
+                    "file_id": file_id,
+                    "input_s3_key": input_s3_key,
                 }
             ),
         }
