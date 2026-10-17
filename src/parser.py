@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pandas
+
 from src.point import Point
 import pandas
 

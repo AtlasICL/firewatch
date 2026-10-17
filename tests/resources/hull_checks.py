@@ -29,12 +29,10 @@ class HullTestCase(unittest.TestCase):
         self.assertTrue(set(hull).issubset(points))
         self.assertEqual(len(hull), len(list(set(hull))))
         for i in range(len(hull)):
-            thruple: list = hull[slice((i * 3), (i * 3) + 3)]
+            start, end = i * 3, min((i * 3) + 3, len(hull))
+            thruple: list = hull[slice(start, end)]
             if not thruple:
                 continue
-            c = thruple.count([])
-            for i in range(c):
-                thruple.remove([])
 
             x_vals = [p.x for p in thruple]
             y_vals = [p.y for p in thruple]
