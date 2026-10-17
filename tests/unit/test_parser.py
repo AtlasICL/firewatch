@@ -15,11 +15,11 @@ class TestParser(unittest.TestCase):
         invalid_files = os.path.join(
             os.getcwd(), "tests", "resources", "invalid csv files"
         )
-        for file in os.scandir(invalid_files):
-            # print("FILE PATH: ", file.path)
-            with self.assertRaises(ValueError):
-                print(parser.parse(file))
-                parser.parse(file)
+        with os.scandir(invalid_files) as scan_dir:
+            for file in scan_dir:
+                with self.assertRaises(ValueError):
+                    print(parser.parse(file))
+                    parser.parse(file)
 
     def test_correct_total_of_points_generated_from_dataset(self):
         """
@@ -30,5 +30,7 @@ class TestParser(unittest.TestCase):
         valid_files = os.path.join(
             os.getcwd(), "tests", "resources", "valid csv files"
         )
-        for expected, file in zip(expected_outputs, os.scandir(valid_files)):
-            self.assertEqual(expected, len(parser.parse(file)))
+
+        with os.scandir(valid_files) as scan_dir:
+            for expected, file in zip(expected_outputs, scan_dir):
+                self.assertEqual(expected, len(parser.parse(file)))

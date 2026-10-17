@@ -12,10 +12,12 @@ class Point:
     def __init__(self, x=None, y=None):
         if x is None or y is None:
             raise ValueError("Requires an x and y value")
-        
-        if not isinstance(x, float) or not isinstance(y, float):
+
+        if not (isinstance(x, float) or isinstance(x, int)) or not (
+            isinstance(y, float) or isinstance(y, int)
+        ):
             raise ValueError("x and y must be numerical")
-        
+
         object.__setattr__(self, "x", x)
         object.__setattr__(self, "y", y)
 

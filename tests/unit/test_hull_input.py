@@ -29,7 +29,6 @@ class TestHullInput(unittest.TestCase):
         An iterable HullInput instance should be created when using the
         boundary and typical test datasets to do so.
         """
-        print(Point(3.5, 7.8))
         for test_case in boundary_test_datasets:
             hull_input = HullInput(test_case)
             self.assertEqual(hull_input.points, tuple(test_case))

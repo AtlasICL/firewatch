@@ -2,6 +2,7 @@ import unittest
 from collections.abc import Iterable
 
 from src.point import Point
+from src.quickhull import _is_inside
 
 
 class HullTestCase(unittest.TestCase):
@@ -25,12 +26,28 @@ class HullTestCase(unittest.TestCase):
         4. Every single point from the input is either inside the hull,
            or part of the hull border.
         """
-        raise NotImplementedError
+        self.assertTrue(set(hull).issubset(points))
+        self.assertEqual(len(hull), len(list(set(hull))))
+        for i in range(len(hull)):
+            thruple: list = hull[slice((i * 3), (i * 3) + 3)]
+            if not thruple:
+                continue
+            c = thruple.count([])
+            for i in range(c):
+                thruple.remove([])
+
+            x_vals = [p.x for p in thruple]
+            y_vals = [p.y for p in thruple]
+            self.assertTrue(sorted(x_vals) or sorted(x_vals, reverse=True))
+            self.assertTrue(sorted(y_vals) or sorted(y_vals, reverse=True))
+
+        for point in points:
+            self.assertTrue(_is_inside(hull, point))
 
     def assert_same_cycle(
         self,
-        hull: list[Point],
         expected: list[Point],
+        hull: list[Point],
     ) -> None:
         """
         Asserts that `hull` lists the same points as `expected` in the
