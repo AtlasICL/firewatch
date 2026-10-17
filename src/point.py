@@ -31,10 +31,7 @@ class HullInput:
     def __init__(self, points: Iterable[Point]):
 
         points = tuple(points)
-        try:
-            if len(set(points)) < 2:
-                raise ValueError("At least 2 distinct points required")
-        except AttributeError:
-            raise ValueError("Invalid set of points")
+        if len(set(points)) < 2:
+            raise ValueError("At least 2 distinct points required")
 
         object.__setattr__(self, "points", points)
