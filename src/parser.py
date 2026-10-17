@@ -4,6 +4,7 @@ import pandas
 
 from src.point import Point
 
+
 class Parser:
     """Responsible for parsing csv fire data."""
 

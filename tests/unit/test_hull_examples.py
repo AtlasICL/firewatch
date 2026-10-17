@@ -20,10 +20,10 @@ class TestHullKnownCases(HullTestCase):
         a = Point(-2, -1)
         b = Point(-4, 1)
         c = Point(-5, 3)
-        d = Point(-3, 5.8)
-        e = Point(2.1, 5)
+        d = Point(-3, 5)
+        e = Point(2, 5)
         f = Point(6, 3)
-        g = Point(6, 0.03)
+        g = Point(6, 0)
         h = Point(5, -2)
 
         points = [
@@ -164,6 +164,26 @@ class TestHullKnownCases(HullTestCase):
 
         hull = quickhull(HullInput(hull_input))
 
+        self.assert_is_convex_hull_of(hull_input, hull)
+        self.assert_same_cycle(expected, hull)
+
+    def test_floating_point_values(self):
+        expected = [
+            Point(-3.164, 1.8),
+            Point(-2.24, 2.51),
+            Point(1.05, 4.987),
+            Point(1.3701, -1.0006),
+        ]
+        hull_input = [
+            Point(1.05, 4.987),
+            Point(-3.164, 1.8),
+            Point(1.3701, -1.0006),
+            Point(-2.24, 2.51),
+            Point(0, 3.531),
+            Point(-0.5001, 0.59987),
+        ]
+
+        hull = quickhull(HullInput(hull_input))
         self.assert_is_convex_hull_of(hull_input, hull)
         self.assert_same_cycle(expected, hull)
 
