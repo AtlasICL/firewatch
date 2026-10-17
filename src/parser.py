@@ -1,10 +1,8 @@
+import pandas
+
 from pathlib import Path
 
-import pandas
-
 from src.point import Point
-import pandas
-
 
 class Parser:
     """Responsible for parsing csv fire data."""
