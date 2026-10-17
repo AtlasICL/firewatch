@@ -11,28 +11,33 @@
  *
  * @param {File} file - The CSV file selected by the user.
  * @param {string} apiEndpoint
- * [apiEndpoint='https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url']
+ * [apiEndpoint='https://xnyu0pnd88.execute-api.eu-north-1.amazonaws.com']
  * - API gateway handling incoming/outgoing file requests.
  * @returns {Promise<UploadDownloadResult>} - Object returning upload/download data.
  * @throws {Error} - Error relating to failed S3 upload/download.
  */
 export async function uploadDownloadFile(
   file,
-  apiEndpoint = "https://j3w9dt7vyg.execute-api.eu-north-1.amazonaws.com/generate_url",
+  apiEndpoint = "https://xnyu0pnd88.execute-api.eu-north-1.amazonaws.com",
 ) {
   //Get download/upload URLs from api endpoint response
-  const presignResponse = await fetch(apiEndpoint, {
+  const presignUploadResponse = await fetch(apiEndpoint + "/generate_url", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ filename: file.name }),
   });
 
-  if (!presignResponse.ok) {
+  if (!presignUploadResponse.ok) {
     //s3 URL get
-    throw new Error("Failed to get S3 URL");
+    const errorBody = await presignUploadResponse.text();
+    console.error("SERVER 500 DETAILS:", errorBody);
+    throw new Error(`Failed to get S3 upload URL: ${errorBody}`);
   }
-  const { uploadUrl, downloadUrl, fileId, s3Key } =
-    await presignResponse.json();
+  const {
+    upload_url: uploadUrl,
+    file_id: fileId,
+    input_s3_key: inputS3Key,
+  } = await presignUploadResponse.json();
   //Attempt S3 upload
   const uploadResponse = await fetch(uploadUrl, {
     method: "PUT",
@@ -43,18 +48,35 @@ export async function uploadDownloadFile(
   if (!uploadResponse.ok) {
     throw new Error("S3 upload failed");
   }
+
+  const presignDownloadResponse = await fetch(
+    apiEndpoint + "/quickhull_download",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ input_s3_key: inputS3Key }),
+    },
+  );
+
+  if (!presignDownloadResponse.ok) {
+    //s3 URL get
+    throw new Error("Failed to get S3 URL");
+  }
+  const { output_key: outputS3Key, download_url: downloadUrl } =
+    await presignDownloadResponse.json();
   //Attempt S3 download
   const downloadResponse = await fetch(downloadUrl);
 
   if (!downloadResponse.ok) {
     throw new Error("S3 download failed");
   }
-  const content = await downloadResponse.text();
+  const quickhullCoords = await downloadResponse.text();
 
   return {
     fileId,
-    s3Key,
-    content,
+    inputS3Key,
+    outputS3Key,
+    quickhullCoords,
   };
 }
 
