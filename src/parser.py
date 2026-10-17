@@ -1,6 +1,6 @@
-import pandas
-
 from pathlib import Path
+
+import pandas
 
 from src.point import Point
 
