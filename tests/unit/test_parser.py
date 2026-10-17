@@ -1,20 +1,34 @@
+import os
 import unittest
 
+from src.parser import Parser
 
-# TODO: JW to implement
-# Inside tests/resources, good idea to create a CSV for testing?
-# Perhaps create multiple - some with typical data, some erroneous
+parser: Parser = Parser()
+
+
 class TestParser(unittest.TestCase):
     def test_exception_thrown_if_csv_is_rejected(self):
         """
         ValueError should be thrown when the dataset .csv file is
         rejected for any reason.
         """
-        self.assertEqual(1, 1)
+        invalid_files = os.path.join(
+            os.getcwd(), "tests", "resources", "invalid csv files"
+        )
+        for file in os.scandir(invalid_files):
+            # print("FILE PATH: ", file.path)
+            with self.assertRaises(ValueError):
+                print(parser.parse(file))
+                parser.parse(file)
 
     def test_correct_total_of_points_generated_from_dataset(self):
         """
         After parsing, the total Point objects in HullInput should
         equal to the total records in the dataset.
         """
-        self.assertEqual(1, 1)
+        expected_outputs = [2, 1, 7, 0, 3, 7, 7, 14]
+        valid_files = os.path.join(
+            os.getcwd(), "tests", "resources", "valid csv files"
+        )
+        for expected, file in zip(expected_outputs, os.scandir(valid_files)):
+            self.assertEqual(expected, len(parser.parse(file)))
