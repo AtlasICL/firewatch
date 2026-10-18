@@ -9,6 +9,11 @@ class Point:
     x: float
     y: float
 
+    def __post_init__(self):
+        for name, value in (("x", self.x), ("y", self.y)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise TypeError(f"{name} must be numerical")
+
 
 @dataclass(frozen=True, slots=True)
 class HullInput:
@@ -17,8 +22,8 @@ class HullInput:
     points: tuple[Point, ...]
 
     def __init__(self, points: Iterable[Point]):
-        points = tuple(points)
 
+        points = tuple(points)
         if len(set(points)) < 2:
             raise ValueError("At least 2 distinct points required")
 

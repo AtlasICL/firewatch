@@ -138,3 +138,10 @@ def quickhull(points: HullInput) -> list[Point]:
             points_below_initial_line,
         )
     )
+
+
+def _is_inside(hull: list[Point], point: Point) -> bool:
+    for idx in range(1, len(hull)):
+        if _cross_product(hull[idx], hull[idx - 1], point) < 0:
+            return False
+    return True
