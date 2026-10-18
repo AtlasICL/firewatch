@@ -26,11 +26,21 @@ class TestParser(unittest.TestCase):
         After parsing, the total Point objects in HullInput should
         equal to the total records in the dataset.
         """
-        expected_outputs = [2, 1, 7, 0, 3, 7, 7, 14]
+        expected_counts = {
+            "empty.csv": 0,
+            "min_size.csv": 2,
+            "missing_dates.csv": 7,
+            "normal.csv": 7,
+            "normal_bigger.csv": 14,
+            "single_point.csv": 1,
+            "skip_line.csv": 7,
+            "triangle.csv": 3,
+        }
         valid_files = os.path.join(
             os.getcwd(), "tests", "resources", "valid csv files"
         )
 
-        with os.scandir(valid_files) as scan_dir:
-            for expected, file in zip(expected_outputs, scan_dir):
-                self.assertEqual(expected, len(parser.parse(file)))
+        for name, expected in expected_counts.items():
+            with self.subTest(file=name):
+                path = os.path.join(valid_files, name)
+                self.assertEqual(expected, len(parser.parse(path)))
