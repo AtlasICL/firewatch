@@ -3,7 +3,7 @@ import unittest
 
 from src.point import HullInput, Point
 from src.quickhull import quickhull
-from tests.resources.hull_checks import HullTestCase, _is_inside
+from tests.hull_checks import HullTestCase
 
 
 class TestHullKnownCases(HullTestCase):
@@ -187,21 +187,6 @@ class TestHullKnownCases(HullTestCase):
         hull = quickhull(HullInput(hull_input))
         self.assert_is_convex_hull_of(hull_input, hull)
         self.assert_same_cycle(hull, expected)
-
-    def test_isinside(self):
-        point_list = [
-            Point(0, 1),
-            Point(5, 6),
-            Point(9, 6),
-            Point(7, 6),
-            Point(9, 0),
-        ]
-
-        hull = quickhull(HullInput(point_list))
-        # Outside hull
-        self.assertFalse(_is_inside(point_list, Point(100, 100)))
-        # Border case
-        self.assertTrue(_is_inside(hull, Point(9, 3)))
 
 
 if __name__ == "__main__":

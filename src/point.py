@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -13,6 +14,8 @@ class Point:
         for name, value in (("x", self.x), ("y", self.y)):
             if isinstance(value, bool) or not isinstance(value, (int, float)):
                 raise TypeError(f"{name} must be numerical")
+            if not math.isfinite(value):
+                raise ValueError(f"{name} must be finite, got {value}")
 
 
 @dataclass(frozen=True, slots=True)
