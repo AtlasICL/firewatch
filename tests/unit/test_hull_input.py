@@ -12,7 +12,7 @@ from tests.resources.test_data import (
 class TestHullInput(unittest.TestCase):
     def test_cannot_create_invalid_point(self):
         for test_case in erroneous_test_points:
-            with self.assertRaises(ValueError):
+            with self.assertRaises(TypeError):
                 Point(*test_case)
 
     def test_cannot_create_hullinput_with_fewer_than_two_distinct_points(self):

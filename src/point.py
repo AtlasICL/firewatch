@@ -9,17 +9,10 @@ class Point:
     x: float
     y: float
 
-    def __init__(self, x=None, y=None):
-        if x is None or y is None:
-            raise ValueError("Requires an x and y value")
-
-        if not (isinstance(x, float) or isinstance(x, int)) or not (
-            isinstance(y, float) or isinstance(y, int)
-        ):
-            raise ValueError("x and y must be numerical")
-
-        object.__setattr__(self, "x", x)
-        object.__setattr__(self, "y", y)
+    def __post_init__(self):
+        for name, value in (("x", self.x), ("y", self.y)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise TypeError(f"{name} must be numerical")
 
 
 @dataclass(frozen=True, slots=True)
