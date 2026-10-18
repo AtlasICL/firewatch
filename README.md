@@ -25,6 +25,42 @@ The website is live at [satellitefirewatch.com](https://satellitefirewatch.com).
   ```
   And then visit http://localhost:8000.
 
+```mermaid
+flowchart LR
+    user(["Visitor's browser"])
+
+    subgraph CF["Cloudflare"]
+        dns["DNS<br/>satellitefirewatch.com"]
+        worker["Worker: firewatch<br/>serves `web/` subdir as static files"]
+    end
+
+    subgraph AWS["AWS eu-north-1"]
+        apigw["API Gateway<br/>HTTP API"]
+        transfer["Lambda<br/>transfer_lambda.generate_url"]
+        qh["Lambda<br/>quickhull_lambda.lambda_handler"]
+        s3[("S3<br/>s3-upload-bucket-firewatch")]
+    end
+
+    %% Edge deployment & static hosting / delivery through Cloudflare
+    user -- "loads the page" --> dns --> worker
+
+    %% Upload Presigned URL flow
+    user -- "1. POST /generate_url" --> apigw
+    apigw --> transfer
+    transfer -. "generates presigned PUT" .-> s3
+    transfer --> apigw
+    apigw -- "2. returns presigned upload URL" --> user
+    user -- "3. PUT CSV directly" --> s3
+
+    %% Processing & Download flow
+    user -- "4. POST /quickhull_download" --> apigw
+    apigw --> qh
+    qh -- "reads raw CSV & writes hull CSV" --> s3
+    qh -. "generates presigned GET" .-> s3
+    qh --> apigw
+    apigw -- "5. returns presigned download URL" --> user
+    user -- "6. GET hull CSV directly" --> s3
+```
 
 ### Testing
 
