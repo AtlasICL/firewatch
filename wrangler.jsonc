@@ -1,0 +1,11 @@
+{
+  "name": "firewatch",
+  "compatibility_date": "2026-10-18",
+  "assets": { "directory": "./web" },
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "satellitefirewatch.com", "custom_domain": true },
+    { "pattern": "www.satellitefirewatch.com", "custom_domain": true }
+  ]
+}
