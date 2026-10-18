@@ -23,8 +23,9 @@ if (fileInput) {
 const uploadButton = document.getElementById("uploadButton");
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
-    const { _fileId, _s3Key, content } = await uploadDownloadFile(file);
-    alert(content);
+    const { _fileId, _inputS3Key, _uploadS3Key, quickhullCoords } =
+      await uploadDownloadFile(file);
+    alert(quickhullCoords);
     //insert quickhull functionality here
   });
 }
