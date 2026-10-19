@@ -7,9 +7,9 @@ from typing import Any
 import boto3
 from botocore.config import Config
 
-from parser import Parser
-from point import HullInput, Point
-from quickhull import quickhull
+from src.parser import Parser
+from src.point import HullInput, Point
+from src.quickhull import quickhull
 
 BUCKET_NAME: str = "s3-upload-bucket-firewatch"
 
