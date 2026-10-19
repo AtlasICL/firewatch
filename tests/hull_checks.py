@@ -2,7 +2,7 @@ import unittest
 from collections.abc import Iterable
 
 from src.point import Point
-from src.quickhull import _is_inside
+from src.quickhull import _cross_product
 
 
 class HullTestCase(unittest.TestCase):
@@ -40,7 +40,7 @@ class HullTestCase(unittest.TestCase):
             self.assertTrue(sorted(y_vals) or sorted(y_vals, reverse=True))
 
         for point in points:
-            self.assertTrue(_is_inside(hull, point))
+            self.assert_point_inside_convex_hull(hull, point)
 
     def assert_same_cycle(
         self,
@@ -59,3 +59,22 @@ class HullTestCase(unittest.TestCase):
             f"Hull:     {hull}\n"
             f"Expected: {expected}",
         )
+
+    def assert_point_inside_convex_hull(
+        self,
+        hull: list[Point],
+        point: Point,
+    ) -> None:
+        """
+        Asserts that `point` lies inside the convex hull, or on its
+        boundary.
+        """
+        for i in range(len(hull)):
+            a = hull[i]
+            b = hull[(i + 1) % len(hull)]
+            self.assertLessEqual(
+                _cross_product(a, b, point),
+                0,
+                f"Hull does not encapsulate all points.\n"
+                f"Excluded point: {point}",
+            )
