@@ -11,13 +11,13 @@ from src.parser import Parser
 from src.point import HullInput, Point
 from src.quickhull import quickhull
 
+BUCKET_NAME: str = "s3-upload-bucket-firewatch"
+
 s3_client = boto3.client(
     "s3",
     region_name=os.environ.get("AWS_REGION", "eu-north-1"),
     config=Config(signature_version="s3v4"),
 )
-# Fixed upload bucket name.
-BUCKET_NAME = "s3-upload-bucket-firewatch"
 
 
 def lambda_handler(event: dict[str, Any], context: Any):
@@ -46,8 +46,11 @@ def lambda_handler(event: dict[str, Any], context: Any):
                 print(f"x = {point.x}  |  y = {point.y}")
 
         s3_client.upload_file(
-            Bucket=BUCKET_NAME, Key=output_s3_key, Filename=str(local_csv_path)
+            Bucket=BUCKET_NAME,
+            Key=output_s3_key,
+            Filename=str(local_csv_path),
         )
+
         # Generate download url based on s3_key.
         presigned_download_url: str = s3_client.generate_presigned_url(
             ClientMethod="get_object",
