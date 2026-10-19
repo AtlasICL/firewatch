@@ -44,8 +44,8 @@ class HullTestCase(unittest.TestCase):
 
     def assert_same_cycle(
         self,
-        expected: list[Point],
         hull: list[Point],
+        expected: list[Point],
     ) -> None:
         """
         Asserts that `hull` lists the same points as `expected` in the

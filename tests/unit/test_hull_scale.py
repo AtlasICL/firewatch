@@ -1,6 +1,6 @@
 import unittest
 
-from tests.resources.hull_checks import HullTestCase
+from tests.hull_checks import HullTestCase
 
 
 class TestHullScale(HullTestCase):

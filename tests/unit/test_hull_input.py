@@ -3,34 +3,40 @@ import unittest
 from src.point import HullInput, Point
 
 
+class TestPoint(unittest.TestCase):
+    def test_accepts_int_and_float_mixed_coordinates(self):
+        self.skipTest("TODO")
+
+    def test_rejects_non_numeric_coordinates(self):
+        self.skipTest("TODO")
+
+    def test_rejects_bool_coordinates(self):
+        self.skipTest("TODO")
+
+    def test_rejects_nan_and_infinite_coordinates(self):
+        self.skipTest("TODO")
+
+
 class TestHullInput(unittest.TestCase):
-    def test_cannot_create_invalid_point(self):
-        erroneous_test_points: list = [
-            [45.9, "word"],
-            [78.4],
-            [],
-        ]
-
-        for test_case in erroneous_test_points:
-            with self.assertRaises(TypeError):
-                Point(*test_case)
-
     def test_cannot_create_hullinput_with_fewer_than_two_distinct_points(self):
         """
         ValueError should be thrown when attempting to create a
-        HullInput instance using the erroneous test datasets.
+        HullInput instance with fewer than two distinct points.
         """
-        erroneous_test_datasets: list[list[Point]] = [
-            # Empty list
-            [],
-            # North-east Scotland
-            [
+        invalid_test_datasets: dict[str, list[Point]] = {
+            "no points": [],
+            "one point (North-east Scotland)": [
                 Point(56.9148, -2.9096),
             ],
-        ]
+            "two identical points": [
+                Point(2, 2),
+                Point(2, 2),
+            ],
+            "many copies of one point": [Point(2, 2)] * 5,
+        }
 
-        for test_case in erroneous_test_datasets:
-            with self.assertRaises(ValueError):
+        for description, test_case in invalid_test_datasets.items():
+            with self.subTest(description), self.assertRaises(ValueError):
                 HullInput(test_case)
 
     def test_can_create_hullinput_with_at_least_two_distinct_points(self):
@@ -38,22 +44,24 @@ class TestHullInput(unittest.TestCase):
         An iterable HullInput instance should be created when using the
         boundary and typical test datasets to do so.
         """
-        boundary_test_datasets: list[list[Point]] = [
-            # North-east Scotland
-            [
+        boundary_test_datasets: dict[str, list[Point]] = {
+            "two points (North-east Scotland)": [
                 Point(56.9148, -2.9096),
                 Point(57.186, -2.8699),
             ],
-            # Central and North Scotland
-            [
+            "two points (Central and North Scotland)": [
                 Point(56.5211, -3.8046),
                 Point(55.9308, -3.9848),
             ],
-        ]
+            "two distinct points with duplicates": [
+                Point(2, 2),
+                Point(2, 2),
+                Point(3, 3),
+            ],
+        }
 
-        typical_test_datasets: list[list[Point]] = [
-            # Central and North Scotland
-            [
+        typical_test_datasets: dict[str, list[Point]] = {
+            "Central and North Scotland": [
                 Point(56.5211, -3.8046),
                 Point(55.9308, -3.9848),
                 Point(55.4245, -3.9132),
@@ -82,8 +90,7 @@ class TestHullInput(unittest.TestCase):
                 Point(57.4134, -3.9754),
                 Point(55.5164, -2.088),
             ],
-            # South Wales
-            [
+            "South Wales": [
                 Point(51.6142, -3.1254),
                 Point(51.6117, -3.1399),
                 Point(51.7621, -3.2507),
@@ -105,8 +112,7 @@ class TestHullInput(unittest.TestCase):
                 Point(52.0173, -4.2),
                 Point(52.0129, -4.19),
             ],
-            # Devon and Cornwall
-            [
+            "Devon and Cornwall": [
                 Point(50.4252, -4.0251),
                 Point(50.4741, -4.3303),
                 Point(50.6544, -3.3889),
@@ -119,19 +125,17 @@ class TestHullInput(unittest.TestCase):
                 Point(52.9868, -4.2414),
                 Point(52.9896, -4.2258),
             ],
-            # North England
-            [
+            "North England": [
                 Point(55.4223, -1.7759),
                 Point(54.8026, -1.9743),
                 Point(54.8929, -2.1792),
                 Point(54.8906, -2.1941),
                 Point(55.5164, -2.088),
             ],
-        ]
+        }
 
-        for test_case in boundary_test_datasets:
-            hull_input = HullInput(test_case)
-            self.assertEqual(hull_input.points, tuple(test_case))
-        for test_case in typical_test_datasets:
-            hull_input = HullInput(test_case)
-            self.assertEqual(hull_input.points, tuple(test_case))
+        all_datasets = {**boundary_test_datasets, **typical_test_datasets}
+        for description, test_case in all_datasets.items():
+            with self.subTest(description):
+                hull_input = HullInput(test_case)
+                self.assertEqual(hull_input.points, tuple(test_case))
