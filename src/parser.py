@@ -30,6 +30,7 @@ class Parser:
                     # Expect row[0] = latitude, row[1] = longitude
                     Point(x=float(row[0]), y=float(row[1]))
                     for row in reader
+                    if row
                 )
         except Exception as e:
             raise ValueError(f"Failed to parse CSV file: {e}")
