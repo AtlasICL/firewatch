@@ -21,14 +21,10 @@ jobs:
 
       - name: Package Quickhull Lambda Function
         run: |
-          rm -rf package quickhull_function.zip
-          mkdir -p package
-          cp -r src package/
-          cp deployment/quickhull_lambda.py package/
-
-          cd package
-          zip -r ../quickhull_function.zip .
-          cd ..
+          # AWS handler is src.quickhull_lambda.lambda_handler, so the
+          # zip keeps the repo's src/ layout.
+          rm -f quickhull_function.zip
+          zip -r quickhull_function.zip src -x '*__pycache__*'
 
       - name: Update Quickhull Lambda Function Code
         run: |
@@ -39,7 +35,7 @@ jobs:
       
       - name: Update Presign URL Function Code
         run: |
-          zip -j url_presign.zip deployment/transfer_lambda.py
+          zip url_presign.zip src/__init__.py src/transfer_lambda.py
           aws lambda update-function-code \
             --function-name generate_url \
             --zip-file fileb://url_presign.zip  \
