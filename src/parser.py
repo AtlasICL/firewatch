@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import csv
+from pathlib import Path
 
 from src.point import Point
 
@@ -28,9 +27,9 @@ class Parser:
             with open(file, mode="r", encoding="utf-8") as csv_file:
                 reader = csv.reader(csv_file)
                 return tuple(
-                        # Expect row[0] = latitude, row[1] = longitude
-                        Point(x=float(row[0]), y=float(row[1]))
-                        for row in reader
-                    )
+                    # Expect row[0] = latitude, row[1] = longitude
+                    Point(x=float(row[0]), y=float(row[1]))
+                    for row in reader
+                )
         except Exception as e:
             raise ValueError(f"Failed to parse CSV file: {e}")
