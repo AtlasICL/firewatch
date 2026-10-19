@@ -2,6 +2,7 @@ import { uploadDownloadFile } from "./upload_download.js";
 
 // Initialise map instance, with initial view of London
 const map = L.map("map").setView([51.505, -0.09], 13);
+map.zoomControl.setPosition("topright");
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution:
@@ -29,3 +30,8 @@ if (uploadButton) {
     //insert quickhull functionality here
   });
 }
+
+window.sampleMessage = function () {
+  alert("A sample dataset will be displayed here (subject to change)");
+  //functionality to display sample dataset to be added
+};
