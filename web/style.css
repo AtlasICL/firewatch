@@ -1,24 +1,29 @@
-main {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+body {
+	font-family: 'JetBrains Mono', monospace;
+	background: #1e293b;
+	color: white;
+	margin: 0;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+.sidebar {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	width: 335px;
+	z-index: 2;
+	background: rgba(15, 23, 42, 0.9);
+	border-radius: 12px;
+    
 }
 
 #map {
-    height: 500px;
-    width: 100%; 
-    border-radius: 8px;
+	position: fixed;
+	inset: 0;
 }
 
 #controls {
-    background: #f3f4f6;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -33,10 +38,63 @@ html, body {
 }
 
 #uploadButton {
-    background: #dc2626;
+    font-family: inherit;
+    background: red;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 6px;
     cursor: pointer;
+    margin: 20px auto 0;
+    display: block;
+    border: 1px red
+}
+
+#uploadButton:hover {
+    background: crimson;
+}
+
+.sample-tabs {
+	position: fixed;
+	top: 20px;
+	left: 370px;
+	z-index: 2;
+	display: flex;
+	gap: 10px;
+}
+
+.sample-button {
+	font-family: inherit;
+	background: #1e293b;
+	color: red;
+	border: 1px solid gray;
+	border-radius: 8px;
+	padding: 12px 18px;
+	cursor: pointer;
+}
+
+.sample-button:hover {
+	border-color: red;
+}
+
+
+#fileInput {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+}
+
+.file-label {
+	display: block;
+	padding: 18px;
+	background: black;
+	border: 1px dashed;
+	border-radius: 8px;
+	color: gray;
+	text-align: center;
+	cursor: pointer;
+}
+
+.file-label:hover {
+	background: #1e293b;
+	border-color: red;
 }

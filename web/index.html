@@ -11,14 +11,29 @@
   <body>
     <main>
 
-
-      <div id="controls">
-          <h3>Upload Fire Coordinates</h3>
-          <input type="file" id="fileInput" class="hidden" accept=.csv,text/csv>
-          <button id="uploadButton">Upload File</button>
+      <div class="sample-tabs">
+        <button class="sample-button" onclick="sampleMessage()">Sample x</button>
+        <button class="sample-button" onclick="sampleMessage()">Sample y</button>
+        <button class="sample-button" onclick="sampleMessage()">Sample z</button>
       </div>
 
-      <div id="map"></div>
+      <div class="sidebar">
+        <div id="controls">
+            <h1>Firewatch</h1>
+            <h3>Upload Fire Coordinates</h3>
+            <input type="file" id="fileInput" class="hidden" accept=.csv,text/csv>
+
+            <label for="fileInput" class="file-label">
+              Choose CSV File
+            </label>
+            <button id="uploadButton">Upload File</button>
+        </div>
+      </div>
+      
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+
     </main>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="main.js"></script>
