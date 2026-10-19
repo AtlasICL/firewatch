@@ -36,8 +36,8 @@ flowchart LR
 
     subgraph AWS["AWS eu-north-1"]
         apigw["API Gateway<br/>HTTP API"]
-        transfer["Lambda<br/>transfer_lambda.generate_url"]
-        qh["Lambda<br/>quickhull_lambda.lambda_handler"]
+        transfer["Lambda<br/>src.transfer_lambda.generate_url"]
+        qh["Lambda<br/>src.quickhull_lambda.lambda_handler"]
         s3[("S3<br/>s3-upload-bucket-firewatch")]
     end
 
