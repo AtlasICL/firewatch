@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import pandas
+import csv
 
 from src.point import Point
 
@@ -24,22 +24,13 @@ class Parser:
             ValueError if the file was not able to be parsed for any
             reason.
         """
-
-        with open(file, "r"):
-            try:
-                df = pandas.read_csv(
-                    file,
-                    header=None,
-                    names=["x", "y", "date"],
-                    # We don't currently have a use for date, but
-                    # potentially we will incorporate time series into
-                    # the product.
-                )
-
+        try:
+            with open(file, mode="r", encoding="utf-8") as csv_file:
+                reader = csv.reader(csv_file)
                 return tuple(
-                    Point(x=row.x, y=row.y)
-                    for row in df.itertuples(index=False)
-                )
-
-            except Exception as e:
-                raise ValueError(f"Failed to parse CSV file: {e}") from e
+                        # Expect row[0] = latitude, row[1] = longitude
+                        Point(x=float(row[0]), y=float(row[1]))
+                        for row in reader
+                    )
+        except Exception as e:
+            raise ValueError(f"Failed to parse CSV file: {e}")
