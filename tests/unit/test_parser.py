@@ -15,6 +15,9 @@ random_size = r.randint(0, 100)
 class TestParser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        """
+        Initialises large and random files for a test run
+        """
         large_file_path: str = RESOURCES / "valid_csv_files" / "large.csv"
         random_file_path: str = RESOURCES / "valid_csv_files" / "random.csv"
 
@@ -39,12 +42,15 @@ class TestParser(unittest.TestCase):
                     day,
                     month,
                     year,
-                ) = (r.randint(1, 28), r.randint(1, 12), r.randint(2001, 2026))
+                ) = (r.randint(1, 28), r.randint(1, 12), r.randint(2001, 2025))
 
                 random_writer.writerow([lat, long, f"{day}/{month}/{year}"])
 
     @classmethod
     def tearDownClass(cls):
+        """
+        Deletes large file at the end of a test run to save space
+        """
         os.remove(RESOURCES / "valid_csv_files" / "large.csv")
 
     def test_exception_thrown_if_csv_is_rejected(self):
@@ -78,4 +84,23 @@ class TestParser(unittest.TestCase):
         for name, expected in expected_counts.items():
             with self.subTest(file=name):
                 path = valid_files / name
+                self.assertEqual(expected, len(parser.parse(path)))
+
+    def test_ignores_out_of_bounds_lines(self):
+        """
+        Should accept files with out of bounds data,
+        but ignore the lines on which they occur
+        """
+        expected_counts: dict[str, int] = {
+            "all_lines_invalid.csv": 0,
+            "invalid_date.csv": 5,
+            "invalid_latitude.csv": 5,
+            "invalid_longitude.csv": 5,
+            "multiple_invalid.csv": 3,
+        }
+        out_of_bounds_files: Path = RESOURCES / "out_of_bounds_csv_files"
+
+        for name, expected in expected_counts.items():
+            with self.subTest(file=name):
+                path = out_of_bounds_files / name
                 self.assertEqual(expected, len(parser.parse(path)))
