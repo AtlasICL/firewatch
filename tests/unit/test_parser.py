@@ -1,3 +1,6 @@
+import csv
+import os
+import random as r
 import unittest
 from pathlib import Path
 
@@ -6,9 +9,44 @@ from src.parser import Parser
 RESOURCES = Path(__file__).resolve().parent.parent / "resources"
 
 parser: Parser = Parser()
+random_size = r.randint(0, 100)
 
 
 class TestParser(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        large_file_path: str = RESOURCES / "valid_csv_files" / "large.csv"
+        random_file_path: str = RESOURCES / "valid_csv_files" / "random.csv"
+
+        with open(large_file_path, "w") as large_file:
+            large_writer = csv.writer(large_file)
+            # 10MB
+            line_count: int = 600_000
+            for line in range(line_count):
+                large_writer.writerow(
+                    [
+                        "50",
+                        "50",
+                        "01/09/2022",
+                    ]
+                )
+
+        with open(random_file_path, "w") as random_file:
+            random_writer = csv.writer(random_file)
+            for line in range(random_size):
+                long, lat = r.randint(-180, 180), r.randint(-90, 90)
+                (
+                    day,
+                    month,
+                    year,
+                ) = (r.randint(1, 28), r.randint(1, 12), r.randint(2001, 2026))
+
+                random_writer.writerow([lat, long, f"{day}/{month}/{year}"])
+
+    @classmethod
+    def tearDownClass(cls):
+        os.remove(RESOURCES / "valid_csv_files" / "large.csv")
+
     def test_exception_thrown_if_csv_is_rejected(self):
         """
         ValueError should be thrown when the dataset .csv file is
@@ -32,6 +70,8 @@ class TestParser(unittest.TestCase):
             "single_point.csv": 1,
             "skip_line.csv": 7,
             "triangle.csv": 3,
+            "large.csv": 600_000,
+            "random.csv": random_size,
         }
         valid_files: Path = RESOURCES / "valid_csv_files"
 
