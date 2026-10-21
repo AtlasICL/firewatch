@@ -25,10 +25,36 @@ if (fileInput) {
 const uploadButton = document.getElementById("uploadButton");
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
-    const { _fileId, _uploadS3Key, _downloadS3Key, convexHullCoordinates } =
-      await uploadDownloadFile(file);
-    alert(convexHullCoordinates);
-    //insert quickhull functionality here
+    const csvContent = await file.text();
+    const points = parseCoordinatesFrom(csvContent);
+    if (points.length === 0) {
+      throw new Error("Uploaded file is empty (no coordinates)");
+    }
+
+    pointsLayer.clearLayers();
+    convexHullLayer.clearLayers();
+    for (const point of points) {
+      L.circleMarker(point, {
+        radius: 7,
+        color: "#ff7f0f",
+        weight: 1,
+        fillColor: "#eb0707",
+        fillOpacity: 0.95,
+      }).addTo(pointsLayer);
+    }
+
+    map.fitBounds(pointsLayer.getBounds(), {
+      paddingTopLeft: [350, 75],
+      paddingBottomRight: [50, 50],
+    });
+    const { convexHullCoordinates } = await uploadDownloadFile(file);
+    L.polygon(parseCoordinatesFrom(convexHullCoordinates), {
+      color: "#8d05fd",
+      weight: 5,
+      fillColor: "#8d05fd",
+      fillOpacity: 0.4,
+    }).addTo(convexHullLayer);
+    pointsLayer.bringToFront();
   });
 }
 
