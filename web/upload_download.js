@@ -33,11 +33,8 @@ export async function uploadDownloadFile(
     console.error("SERVER 500 DETAILS:", errorBody);
     throw new Error(`Failed to get S3 upload URL: ${errorBody}`);
   }
-  const {
-    upload_url: uploadUrl,
-    file_id: fileId,
-    input_s3_key: uploadS3Key,
-  } = await presignUploadResponse.json();
+  const { upload_url: uploadUrl, input_s3_key: uploadS3Key } =
+    await presignUploadResponse.json();
   //Attempt S3 upload
   const uploadResponse = await fetch(uploadUrl, {
     method: "PUT",
@@ -62,8 +59,7 @@ export async function uploadDownloadFile(
     //s3 URL get
     throw new Error("Failed to get S3 URL");
   }
-  const { output_key: downloadS3Key, download_url: downloadUrl } =
-    await presignDownloadResponse.json();
+  const { download_url: downloadUrl } = await presignDownloadResponse.json();
   //Attempt S3 download
   const downloadResponse = await fetch(downloadUrl);
 
@@ -72,12 +68,7 @@ export async function uploadDownloadFile(
   }
   const convexHullCoordinates = await downloadResponse.text();
 
-  return {
-    fileId,
-    uploadS3Key,
-    downloadS3Key,
-    convexHullCoordinates,
-  };
+  return convexHullCoordinates;
 }
 
 export default uploadDownloadFile;
