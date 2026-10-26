@@ -39,7 +39,7 @@ class Parser:
                         float(row[1]) <= 180 and float(row[1]) >= -180
                     )
                     and (
-                        len(row) < 3
+                        (len(row) < 3 or row[2] == "")
                         or (
                             (  # Date format: dd/mm/yyyy
                                 dt.strptime(row[2], "%d/%m/%Y")
@@ -50,4 +50,4 @@ class Parser:
                     )
                 )
         except Exception as e:
-            raise ValueError(f"Failed to parse CSV file: {e}")
+            raise ValueError(f"Failed to parse CSV file {file}: {e}")

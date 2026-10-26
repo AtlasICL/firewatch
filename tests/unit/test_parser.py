@@ -87,6 +87,7 @@ class TestParser(unittest.TestCase):
         for name, expected in expected_counts.items():
             with self.subTest(file=name):
                 path = valid_files / name
+                # print(name)
                 self.assertEqual(expected, len(parser.parse(path)))
 
     def test_ignores_out_of_bounds_lines(self):
