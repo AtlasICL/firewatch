@@ -1,5 +1,7 @@
 pandas
 boto3
+numpy
+scipy
 pytest
 scipy
 numpy
