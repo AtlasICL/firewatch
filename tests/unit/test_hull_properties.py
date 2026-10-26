@@ -19,7 +19,6 @@ class TestHullMetamorphic(HullTestCase):
     Worked example matching the explanatory diagrams in
     `../../img/example_output/`.
     """
-
     a = Point(-2, -1)
     b = Point(-4, 1)
     c = Point(-5, 3)

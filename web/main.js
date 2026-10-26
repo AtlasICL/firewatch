@@ -1,3 +1,4 @@
+import { parseCoordinatesFrom } from "./coordinates.js";
 import { uploadDownloadFile } from "./upload_download.js";
 
 // Initialise map instance, with initial view of London
@@ -24,14 +25,110 @@ if (fileInput) {
 const uploadButton = document.getElementById("uploadButton");
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
-    const { _fileId, _inputS3Key, _uploadS3Key, quickhullCoords } =
-      await uploadDownloadFile(file);
-    alert(quickhullCoords);
-    //insert quickhull functionality here
+    const csvContent = await file.text();
+    const points = parseCoordinatesFrom(csvContent);
+    if (points.length === 0) {
+      throw new Error("Uploaded file is empty (no coordinates)");
+    }
+
+    pointsLayer.clearLayers();
+    convexHullLayer.clearLayers();
+    for (const point of points) {
+      L.circleMarker(point, {
+        radius: 7,
+        color: "#ff7f0f",
+        weight: 1,
+        fillColor: "#eb0707",
+        fillOpacity: 0.95,
+      }).addTo(pointsLayer);
+    }
+
+    map.fitBounds(pointsLayer.getBounds(), {
+      paddingTopLeft: [350, 75],
+      paddingBottomRight: [50, 50],
+    });
+    const { convexHullCoordinates } = await uploadDownloadFile(file);
+    L.polygon(parseCoordinatesFrom(convexHullCoordinates), {
+      color: "#8d05fd",
+      weight: 5,
+      fillColor: "#8d05fd",
+      fillOpacity: 0.4,
+    }).addTo(convexHullLayer);
+    pointsLayer.bringToFront();
   });
 }
 
-window.sampleMessage = function () {
-  alert("A sample dataset will be displayed here (subject to change)");
-  //functionality to display sample dataset to be added
-};
+// Layers for the currently displayed dataset.
+const pointsLayer = L.featureGroup().addTo(map);
+const convexHullLayer = L.featureGroup().addTo(map);
+
+// Bumped on every load.
+// Used to prevent the hull response of an earlier click overwriting a newly
+// selected dataset.
+let currentLoadId = 0;
+
+/**
+ * Fetches a premade CSV file (served statically to the user).
+ * Plots the points on the map, and moves the map onto them.
+ * Calls quickhull on the set of points, and draws that hull once it returns.
+ *
+ * @param {string} path - Path (relative) for the sample CSV.
+ */
+async function loadSample(path) {
+  const loadId = ++currentLoadId;
+  const isStale = () => loadId !== currentLoadId;
+
+  const response = await fetch(path);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${path} (HTTP ${response.status})`);
+  }
+  const csvData = await response.text();
+  if (isStale()) return;
+
+  const points = parseCoordinatesFrom(csvData);
+  if (points.length === 0) {
+    throw new Error(`${path} is empty (no coordinates)`);
+  }
+
+  pointsLayer.clearLayers();
+  convexHullLayer.clearLayers();
+  for (const point of points) {
+    L.circleMarker(point, {
+      radius: 7,
+      color: "#ff7f0f",
+      weight: 1,
+      fillColor: "#eb0707",
+      fillOpacity: 0.95,
+    }).addTo(pointsLayer);
+  }
+
+  // Padding to keep points clear or UI elements.
+  map.fitBounds(pointsLayer.getBounds(), {
+    paddingTopLeft: [350, 75],
+    paddingBottomRight: [50, 50],
+  });
+
+  const filename = path.split("/").pop();
+  const premadeFile = new File([csvData], filename, { type: "text/csv" });
+  const { convexHullCoordinates } = await uploadDownloadFile(premadeFile);
+  if (isStale()) return;
+
+  L.polygon(parseCoordinatesFrom(convexHullCoordinates), {
+    color: "#8d05fd",
+    weight: 5,
+    fillColor: "#8d05fd",
+    fillOpacity: 0.4,
+  }).addTo(convexHullLayer);
+  pointsLayer.bringToFront();
+}
+
+for (const button of document.querySelectorAll(".sample-button")) {
+  button.addEventListener("click", async () => {
+    try {
+      await loadSample(button.dataset.sample);
+    } catch (error) {
+      console.error(error);
+      alert(`Couldn't load sample: ${error.message}`);
+    }
+  });
+}
