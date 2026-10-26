@@ -3,3 +3,4 @@ boto3
 pytest
 scipy
 numpy
+pytest-benchmark
