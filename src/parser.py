@@ -39,7 +39,7 @@ class Parser:
                         float(row[1]) <= 180 and float(row[1]) >= -180
                     )
                     and (
-                        not row[2]
+                        len(row) < 3
                         or (
                             (  # Date format: dd/mm/yyyy
                                 dt.strptime(row[2], "%d/%m/%Y")

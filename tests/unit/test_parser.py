@@ -18,14 +18,19 @@ class TestParser(unittest.TestCase):
         """
         Initialises large and random files for a test run
         """
+
         large_file_path: str = RESOURCES / "valid_csv_files" / "large.csv"
         random_file_path: str = RESOURCES / "valid_csv_files" / "random.csv"
 
-        with open(large_file_path, "w") as large_file:
-            large_writer = csv.writer(large_file)
-            # 10MB
-            line_count: int = 600_000
-            for line in range(line_count):
+        with (
+            open(large_file_path, "w") as large_file,
+            open(random_file_path, "w") as random_file,
+        ):
+            large_writer, random_writer = (
+                csv.writer(large_file),
+                csv.writer(random_file),
+            )
+            for line in range(600_000):  # 10MB
                 large_writer.writerow(
                     [
                         "50",
@@ -34,8 +39,6 @@ class TestParser(unittest.TestCase):
                     ]
                 )
 
-        with open(random_file_path, "w") as random_file:
-            random_writer = csv.writer(random_file)
             for line in range(random_size):
                 long, lat = r.randint(-180, 180), r.randint(-90, 90)
                 (
