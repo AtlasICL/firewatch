@@ -1,4 +1,5 @@
 import { parseCoordinatesFrom } from "./coordinates.js";
+import { settlementsInRange } from "./settlements.js";
 import { uploadDownloadFile } from "./upload_download.js";
 
 // Initialise map instance, with initial view of London
@@ -18,6 +19,8 @@ const convexHullLayer = L.featureGroup().addTo(map);
 // Used to prevent the hull response of an earlier click overwriting a newly
 // selected dataset.
 let currentLoadId = 0;
+
+let currentSettlementLayer = null;
 
 /**
  * Plots the points in a CSV file on the map, and moves the map onto them.
@@ -58,7 +61,11 @@ async function plotFileAndHull(file) {
   const convexHullCoordinates = await uploadDownloadFile(file);
   if (isStale()) return;
 
-  L.polygon(parseCoordinatesFrom(convexHullCoordinates), {
+  const parsedCoordinates = parseCoordinatesFrom(convexHullCoordinates);
+
+  updateSettlements(parsedCoordinates, map);
+
+  L.polygon(parsedCoordinates, {
     color: "#8d05fd",
     weight: 5,
     fillColor: "#8d05fd",
@@ -83,6 +90,20 @@ async function loadSample(path) {
   const csvData = await response.text();
   const filename = path.split("/").pop();
   await plotFileAndHull(new File([csvData], filename, { type: "text/csv" }));
+}
+
+/**
+ * Updates settlements based on current convex hull in view, removes
+ * previous settlements if applicable.
+ *
+ * @param {[number, number][]} hullCoordinates - latitude and longitude coordinate list of convex hull nodes.
+ */
+async function updateSettlements(hullCoordinates) {
+  if (currentSettlementLayer) {
+    map.removeLayer(currentSettlementLayer);
+    currentSettlementLayer = null;
+  }
+  currentSettlementLayer = await settlementsInRange(hullCoordinates, map);
 }
 
 // File upload logic.
