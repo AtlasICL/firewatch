@@ -4,7 +4,7 @@
  *
  * @param {[number, number][]} parsedCoordinates - latitude and longitude coordinate list of convex hull nodes.
  * @param {L.map} map - leaflet.js map instance to add settlement markers to.
- * @returns {Promise<L.GeoJSON>} - Layer of individual markers of settlements within the convex hull. 
+ * @returns {Promise<L.GeoJSON>} - Layer of individual markers of settlements within the convex hull.
  */
 export async function settlementsInRange(parsedCoordinates, map) {
   // Convert to geoJSON
