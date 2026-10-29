@@ -34,15 +34,14 @@ class TestPerformance(unittest.TestCase):
         benchmark(quickhull, hull_input)
 
 
-@pytest.mark.benchmark(group="large")
-def test_our_performance_on_large_input_size(benchmark):
-    input_points: tuple[Point, ...] = []
-    for x in range(100):
-        for y in range(100):
-            input_points.append(Point(x, y))
+    def test_our_performance_on_large_input_size(self):
+        input_points: tuple[Point, ...] = []
+        for x in range(100):
+            for y in range(100):
+                input_points.append(Point(x, y))
 
-    tuple_input = points_to_tuple(input_points)
-    benchmark(ConvexHull, tuple_input)
+        tuple_input = points_to_tuple(input_points)
+        benchmark(ConvexHull, tuple_input)
 
 
 @pytest.mark.benchmark(group="large")
