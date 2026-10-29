@@ -14,13 +14,12 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // Layers for the currently displayed dataset.
 const pointsLayer = L.featureGroup().addTo(map);
 const convexHullLayer = L.featureGroup().addTo(map);
+const settlementsLayer = L.featureGroup().addTo(map);
 
 // Bumped on every load.
 // Used to prevent the hull response of an earlier click overwriting a newly
 // selected dataset.
 let currentLoadId = 0;
-
-let currentSettlementLayer = null;
 
 /**
  * Plots the points in a CSV file on the map, and moves the map onto them.
@@ -42,6 +41,7 @@ async function plotFileAndHull(file) {
 
   pointsLayer.clearLayers();
   convexHullLayer.clearLayers();
+  settlementsLayer.clearLayers();
   for (const point of points) {
     L.circleMarker(point, {
       radius: 7,
@@ -61,17 +61,19 @@ async function plotFileAndHull(file) {
   const convexHullCoordinates = await uploadDownloadFile(file);
   if (isStale()) return;
 
-  const parsedCoordinates = parseCoordinatesFrom(convexHullCoordinates);
+  const hullPoints = parseCoordinatesFrom(convexHullCoordinates);
 
-  updateSettlements(parsedCoordinates, map);
-
-  L.polygon(parsedCoordinates, {
+  L.polygon(hullPoints, {
     color: "#8d05fd",
     weight: 5,
     fillColor: "#8d05fd",
     fillOpacity: 0.4,
   }).addTo(convexHullLayer);
   pointsLayer.bringToFront();
+
+  const settlements = await settlementsInRange(hullPoints);
+  if (isStale()) return;
+  settlements.addTo(settlementsLayer);
 }
 
 /**
@@ -90,20 +92,6 @@ async function loadSample(path) {
   const csvData = await response.text();
   const filename = path.split("/").pop();
   await plotFileAndHull(new File([csvData], filename, { type: "text/csv" }));
-}
-
-/**
- * Updates settlements based on current convex hull in view, removes
- * previous settlements if applicable.
- *
- * @param {[number, number][]} hullCoordinates - latitude and longitude coordinate list of convex hull nodes.
- */
-async function updateSettlements(hullCoordinates) {
-  if (currentSettlementLayer) {
-    map.removeLayer(currentSettlementLayer);
-    currentSettlementLayer = null;
-  }
-  currentSettlementLayer = await settlementsInRange(hullCoordinates, map);
 }
 
 // File upload logic.
