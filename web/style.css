@@ -214,6 +214,18 @@ main {
 	color: var(--text);
 }
 
+/* A file has been picked: solid border and the file name in full colour. */
+.file-label.has-file {
+	border-style: solid;
+	border-color: var(--accent);
+	background: var(--accent-tint);
+}
+
+.file-label.has-file #fileName {
+	color: var(--text);
+	font-weight: 600;
+}
+
 #uploadButton {
 	display: block;
 	width: 100%;

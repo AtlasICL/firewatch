@@ -98,7 +98,9 @@ const sampleRadios = document.querySelectorAll('input[name="sample"]');
 // File upload logic.
 let file = null;
 const fileInput = document.getElementById("fileInput");
+const fileLabel = document.querySelector('label[for="fileInput"]');
 const fileName = document.getElementById("fileName");
+const fileHint = document.getElementById("fileHint");
 const uploadButton = document.getElementById("uploadButton");
 if (fileInput) {
   fileInput.addEventListener("change", (event) => {
@@ -106,6 +108,8 @@ if (fileInput) {
     if (!intendedFile) return;
     file = intendedFile;
     fileName.textContent = file.name;
+    fileHint.textContent = "Click to change file";
+    fileLabel.classList.add("has-file");
     uploadButton.disabled = false;
   });
 }
