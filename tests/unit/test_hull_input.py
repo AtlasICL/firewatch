@@ -1,3 +1,4 @@
+import math
 import unittest
 
 from src.point import HullInput, Point
@@ -5,16 +6,33 @@ from src.point import HullInput, Point
 
 class TestPoint(unittest.TestCase):
     def test_accepts_int_and_float_mixed_coordinates(self):
-        self.skipTest("TODO")
+        point = Point(-3.4, 1.5)
+        self.assertEqual(point.x, -3.4)
+        self.assertEqual(point.y, 1.5)
 
     def test_rejects_non_numeric_coordinates(self):
-        self.skipTest("TODO")
-
-    def test_rejects_bool_coordinates(self):
-        self.skipTest("TODO")
+        non_numerical_pairs = [
+            [5, "2"],
+            [[1, 2], 6],
+            [None, 3],
+            [False, True],
+            [9, Point(1, 2)],
+        ]
+        for pair in non_numerical_pairs:
+            with self.assertRaises(TypeError):
+                Point(*pair)
 
     def test_rejects_nan_and_infinite_coordinates(self):
-        self.skipTest("TODO")
+        invalid_pairs = [[1, math.nan], [math.inf, 2]]
+        for pair in invalid_pairs:
+            with self.assertRaises(ValueError):
+                Point(*pair)
+
+    def test_rejects_incorrect_num_args(self):
+        incorrrect_num_agrs = [[4], [], [3, 1, 2]]
+        for pair in incorrrect_num_agrs:
+            with self.assertRaises(TypeError):
+                Point(*pair)
 
 
 class TestHullInput(unittest.TestCase):

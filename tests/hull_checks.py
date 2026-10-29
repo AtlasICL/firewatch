@@ -1,6 +1,8 @@
 import unittest
 from collections.abc import Iterable
 
+from numpy import sign
+
 from src.point import Point
 from src.quickhull import _cross_product
 
@@ -31,8 +33,11 @@ class HullTestCase(unittest.TestCase):
         for i in range(len(hull)):
             start, end = i * 3, min((i * 3) + 3, len(hull))
             thruple: list = hull[slice(start, end)]
-            if not thruple:
+            if not thruple or len(thruple) < 3:
                 continue
+
+            cross_product = _cross_product(thruple[0], thruple[1], thruple[2])
+            self.assertEqual(sign(cross_product), -1)
 
             x_vals = [p.x for p in thruple]
             y_vals = [p.y for p in thruple]

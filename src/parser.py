@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime as dt
 from pathlib import Path
 
 from src.point import Point
@@ -31,6 +32,22 @@ class Parser:
                     Point(x=float(row[0]), y=float(row[1]))
                     for row in reader
                     if row
+                    and (  # Latitude
+                        float(row[0]) <= 90 and float(row[0]) >= -90
+                    )
+                    and (  # Longitude
+                        float(row[1]) <= 180 and float(row[1]) >= -180
+                    )
+                    and (
+                        (len(row) < 3 or row[2] == "")
+                        or (
+                            (  # Date format: dd/mm/yyyy
+                                dt.strptime(row[2], "%d/%m/%Y")
+                                >= dt(2000, 10, 1)
+                            )
+                            and (dt.strptime(row[2], "%d/%m/%Y") <= dt.now())
+                        )
+                    )
                 )
         except Exception as e:
-            raise ValueError(f"Failed to parse CSV file: {e}")
+            raise ValueError(f"Failed to parse CSV file {file}: {e}")

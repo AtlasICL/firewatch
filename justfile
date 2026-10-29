@@ -22,6 +22,8 @@ check:
 # Run all tests
 test:
     python3 -m unittest
+    pytest benchmarks/ --benchmark-sort=mean
+    
 
 run: 
     python3 -m src.main
