@@ -1,4 +1,5 @@
 import { parseCoordinatesFrom } from "./coordinates.js";
+import { settlementsInRange } from "./settlements.js";
 import { uploadDownloadFile } from "./upload_download.js";
 
 // Initialise map instance, with initial view of London
@@ -13,6 +14,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // Layers for the currently displayed dataset.
 const pointsLayer = L.featureGroup().addTo(map);
 const convexHullLayer = L.featureGroup().addTo(map);
+const settlementsLayer = L.featureGroup().addTo(map);
 
 // Bumped on every load.
 // Used to prevent the hull response of an earlier click overwriting a newly
@@ -39,6 +41,7 @@ async function plotFileAndHull(file) {
 
   pointsLayer.clearLayers();
   convexHullLayer.clearLayers();
+  settlementsLayer.clearLayers();
   for (const point of points) {
     L.circleMarker(point, {
       radius: 7,
@@ -58,13 +61,19 @@ async function plotFileAndHull(file) {
   const convexHullCoordinates = await uploadDownloadFile(file);
   if (isStale()) return;
 
-  L.polygon(parseCoordinatesFrom(convexHullCoordinates), {
+  const hullPoints = parseCoordinatesFrom(convexHullCoordinates);
+
+  L.polygon(hullPoints, {
     color: "#8d05fd",
     weight: 5,
     fillColor: "#8d05fd",
     fillOpacity: 0.4,
   }).addTo(convexHullLayer);
   pointsLayer.bringToFront();
+
+  const settlements = await settlementsInRange(hullPoints);
+  if (isStale()) return;
+  settlements.addTo(settlementsLayer);
 }
 
 /**

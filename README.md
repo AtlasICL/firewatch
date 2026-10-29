@@ -79,7 +79,7 @@ We have a mix of white-box and black-box testing.
 
 |                           |                                                                                                                                                                                        |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Third-party resources** | The initial datasets were taken from NASA's FIRMS (Fire Information for Resource Management System) dataset, freely available [here](https://firms.modaps.eosdis.nasa.gov/active_fire) |
+| **Third-party resources** | The initial datasets for historic fire locations were taken from NASA's FIRMS (Fire Information for Resource Management System) dataset, freely available [here](https://firms.modaps.eosdis.nasa.gov/active_fire). Settlement data is gathered from the Natural Earth Populated Places dataset, freely available [here](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/).|
 | **Limitations**           | TODO                                                                                                                                                                                   |
 | **Dependencies**          | Python 3.12+ for runtime. Amazon AWS S3 and Lambdas for file storage and compute (and AWS SDK for deployment). Cloudflare for DNS and edge hosting.                                    |
 
