@@ -3,7 +3,6 @@ import random as r
 import unittest
 from benchmarks.benchmark_timing import benchmark
 
-import pytest
 from scipy.spatial import ConvexHull
 
 from src.point import HullInput, Point
