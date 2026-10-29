@@ -1,10 +1,9 @@
 import random as r
-
 import unittest
-from benchmarks.benchmark_timing import benchmark
 
 from scipy.spatial import ConvexHull
 
+from benchmarks.benchmark_timing import benchmark
 from src.point import HullInput, Point
 from src.quickhull import quickhull
 
