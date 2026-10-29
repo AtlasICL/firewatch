@@ -1,100 +1,287 @@
+
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+	--bg: #111a2b;
+	--surface: #1e2b40;
+	--surface-hover: #283850;
+	--border: #34455e;
+	--text: #f1f5fa;
+	--text-subtle: #aebed2;
+	--accent: #d94b58;
+	--accent-hover: #c43d4b;
+	--accent-tint: rgba(217, 75, 88, 0.12);
+	--radius: 10px;
+}
+
+* {
+	box-sizing: border-box;
+}
 
 body {
 	font-family: 'JetBrains Mono', monospace;
-	background: #1e293b;
-	color: white;
+	background: var(--bg);
+	color: var(--text);
 	margin: 0;
+	-webkit-font-smoothing: antialiased;
 }
+
+main {
+	display: grid;
+	grid-template-columns: 320px minmax(0, 1fr);
+	height: 100vh;
+	height: 100dvh;
+}
+
+/* Sidebar */
 
 .sidebar {
-	position: fixed;
-	top: 20px;
-	left: 20px;
-	width: 335px;
-	z-index: 2;
-	background: rgba(15, 23, 42, 0.9);
-	border-radius: 12px;
-    
-}
-
-#map {
-	position: fixed;
-	inset: 0;
-}
-
-#controls {
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
-
-#coordinates {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-#uploadButton {
-    font-family: inherit;
-    background: red;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin: 20px auto 0;
-    display: block;
-    border: 1px red
-}
-
-#uploadButton:hover {
-    background: crimson;
-}
-
-.sample-tabs {
-	position: fixed;
-	top: 20px;
-	left: 370px;
-	z-index: 2;
 	display: flex;
-	gap: 10px;
+	flex-direction: column;
+	gap: 24px;
+	padding: 26px 22px;
+	background: var(--bg);
+	border-right: 1px solid var(--border);
+	overflow-y: auto;
+	z-index: 1;
 }
 
-.sample-button {
-	font-family: inherit;
-	background: #1e293b;
-	color: red;
-	border: 1px solid gray;
-	border-radius: 8px;
-	padding: 12px 18px;
+.sidebar-header h1 {
+	margin: 0 0 8px;
+	font-size: 21px;
+	font-weight: 700;
+	letter-spacing: -0.04em;
+}
+
+.subtle {
+	margin: 0;
+	color: var(--text-subtle);
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+.section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+}
+
+.section-label {
+	display: block;
+	margin: 0 0 12px;
+	padding: 0;
+	color: var(--text-subtle);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.divider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--text-subtle);
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+}
+
+.divider::before,
+.divider::after {
+	content: '';
+	flex: 1;
+	border-top: 1px solid var(--border);
+}
+
+/* Sample datasets */
+
+.choice-card {
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--surface);
+	overflow: hidden;
+}
+
+.choice {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 15px 16px;
 	cursor: pointer;
+	transition: background-color 160ms ease;
 }
 
-.sample-button:hover {
-	border-color: red;
+.choice + .choice {
+	border-top: 1px solid var(--border);
 }
 
+.choice:hover {
+	background: var(--surface-hover);
+}
+
+.choice:has(input:checked) {
+	background: var(--accent-tint);
+	box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.choice:has(input:focus-visible) {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+.choice input {
+	appearance: none;
+	flex: none;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	border: 1.5px solid var(--text-subtle);
+	border-radius: 50%;
+	background: transparent;
+	cursor: pointer;
+	transition:
+		border-color 160ms ease,
+		box-shadow 160ms ease;
+}
+
+.choice input:focus-visible {
+	outline: none;
+}
+
+.choice input:checked {
+	border-color: var(--accent);
+	box-shadow:
+		inset 0 0 0 3px var(--surface),
+		inset 0 0 0 8px var(--accent);
+}
+
+.choice-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.choice-title {
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.choice-description {
+	color: var(--text-subtle);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+/* Upload */
 
 #fileInput {
 	position: absolute;
 	width: 1px;
 	height: 1px;
+	opacity: 0;
 }
 
 .file-label {
-	display: block;
-	padding: 18px;
-	background: black;
-	border: 1px dashed;
-	border-radius: 8px;
-	color: gray;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 18px 16px;
+	border: 1px dashed var(--border);
+	border-radius: var(--radius);
+	background: rgba(255, 255, 255, 0.015);
+	color: var(--text-subtle);
+	font-size: 12px;
+	line-height: 1.5;
 	text-align: center;
 	cursor: pointer;
+	overflow-wrap: anywhere;
+	transition:
+		border-color 160ms ease,
+		background-color 160ms ease,
+		color 160ms ease;
 }
 
-.file-label:hover {
-	background: #1e293b;
-	border-color: red;
+.file-label:hover,
+#fileInput:focus-visible + .file-label {
+	border-color: var(--accent);
+	background: var(--accent-tint);
+	color: var(--text);
+}
+
+#uploadButton {
+	display: block;
+	width: 100%;
+	margin-top: 12px;
+	padding: 12px 16px;
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 600;
+	color: #fff;
+	background: var(--accent);
+	border: 1px solid transparent;
+	border-radius: var(--radius);
+	cursor: pointer;
+	transition:
+		background-color 160ms ease,
+		transform 160ms ease;
+}
+
+#uploadButton:hover:not(:disabled) {
+	background: var(--accent-hover);
+}
+
+#uploadButton:active:not(:disabled) {
+	transform: translateY(1px);
+}
+
+#uploadButton:focus-visible {
+	outline: 2px solid var(--text);
+	outline-offset: 3px;
+}
+
+#uploadButton:disabled {
+	color: var(--text-subtle);
+	background: var(--surface);
+	border-color: var(--border);
+	cursor: not-allowed;
+}
+
+/* Map */
+
+.map-container,
+#map {
+	height: 100%;
+	min-height: 0;
+}
+
+/* Responsive */
+
+@media (max-width: 720px) {
+	main {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto 70vh;
+		height: auto;
+	}
+
+	.sidebar {
+		gap: 22px;
+		padding: 22px 18px;
+		border-right: 0;
+		border-bottom: 1px solid var(--border);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.choice,
+	.choice input,
+	.file-label,
+	#uploadButton {
+		transition: none;
+	}
 }

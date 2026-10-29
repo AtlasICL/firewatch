@@ -52,10 +52,9 @@ async function plotFileAndHull(file) {
     }).addTo(pointsLayer);
   }
 
-  // Padding to keep points clear or UI elements.
   map.fitBounds(pointsLayer.getBounds(), {
-    paddingTopLeft: [350, 75],
-    paddingBottomRight: [50, 50],
+    paddingTopLeft: [55, 55],
+    paddingBottomRight: [70, 50],
   });
 
   const convexHullCoordinates = await uploadDownloadFile(file);
@@ -94,25 +93,32 @@ async function loadSample(path) {
   await plotFileAndHull(new File([csvData], filename, { type: "text/csv" }));
 }
 
+const sampleRadios = document.querySelectorAll('input[name="sample"]');
+
 // File upload logic.
 let file = null;
 const fileInput = document.getElementById("fileInput");
+const fileName = document.getElementById("fileName");
+const uploadButton = document.getElementById("uploadButton");
 if (fileInput) {
   fileInput.addEventListener("change", (event) => {
     const intendedFile = event.target.files[0];
     if (!intendedFile) return;
     file = intendedFile;
+    fileName.textContent = file.name;
+    uploadButton.disabled = false;
   });
 }
 
 // File upload button logic.
-const uploadButton = document.getElementById("uploadButton");
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
     if (!file) {
       alert("Please choose a CSV to upload.");
       return;
     }
+    // Uploaded file replaces whichever sample was shown.
+    for (const radio of sampleRadios) radio.checked = false;
     try {
       await plotFileAndHull(file);
     } catch (error) {
@@ -122,10 +128,12 @@ if (uploadButton) {
   });
 }
 
-for (const button of document.querySelectorAll(".sample-button")) {
-  button.addEventListener("click", async () => {
+// Sample datasets are radios, so only one can be selected at a time.
+for (const radio of sampleRadios) {
+  radio.addEventListener("change", async () => {
+    if (!radio.checked) return;
     try {
-      await loadSample(button.dataset.sample);
+      await loadSample(radio.value);
     } catch (error) {
       console.error(error);
       alert(`Couldn't load sample: ${error.message}`);

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Firewatch</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -11,25 +13,52 @@
   <body>
     <main>
 
-      <div class="sample-tabs">
-        <button class="sample-button" data-sample="samples/scotland.csv">Scotland</button>
-        <button class="sample-button" data-sample="samples/south_wales.csv">South Wales</button>
-        <button class="sample-button" data-sample="samples/cornwall_and_devon.csv">Cornwall and Devon</button>
-      </div>
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <h1>Firewatch</h1>
+          <p class="subtle">Map fire hotspots, their extent, and the settlements inside it.</p>
+        </header>
 
-      <div class="sidebar">
-        <div id="controls">
-            <h1>Firewatch</h1>
-            <h3>Upload Fire Coordinates</h3>
-            <input type="file" id="fileInput" class="hidden" accept=.csv,text/csv>
-
-            <label for="fileInput" class="file-label">
-              Choose CSV File
+        <fieldset class="section">
+          <legend class="section-label">Sample datasets</legend>
+          <div class="choice-card">
+            <label class="choice">
+              <input type="radio" name="sample" value="samples/scotland.csv">
+              <span class="choice-text">
+                <span class="choice-title">Scotland</span>
+                <span class="choice-description">27 hotspots</span>
+              </span>
             </label>
-            <button id="uploadButton">Upload File</button>
-        </div>
-      </div>
-      
+            <label class="choice">
+              <input type="radio" name="sample" value="samples/south_wales.csv">
+              <span class="choice-text">
+                <span class="choice-title">South Wales</span>
+                <span class="choice-description">20 hotspots</span>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="sample" value="samples/cornwall_and_devon.csv">
+              <span class="choice-text">
+                <span class="choice-title">Cornwall and Devon</span>
+                <span class="choice-description">11 hotspots</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="divider"><span>or</span></div>
+
+        <section class="section" id="controls">
+          <h2 class="section-label">Upload your own</h2>
+          <input type="file" id="fileInput" accept=".csv,text/csv">
+          <label for="fileInput" class="file-label">
+            <span id="fileName">Choose CSV file</span>
+            <span class="choice-description">latitude,longitude per line</span>
+          </label>
+          <button id="uploadButton" disabled>Plot file</button>
+        </section>
+      </aside>
+
       <div class="map-container">
         <div id="map"></div>
       </div>
