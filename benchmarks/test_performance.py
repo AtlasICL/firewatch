@@ -1,5 +1,8 @@
 import random as r
 
+import unittest
+from benchmarks.benchmark_timing import benchmark
+
 import pytest
 from scipy.spatial import ConvexHull
 
@@ -11,15 +14,15 @@ def points_to_tuple(points: list[Point]):
     return list(map(lambda p: (p.x, p.y), points))
 
 
-@pytest.mark.benchmark(group="average")
-def test_our_performance_on_average_input_size(benchmark):
-    input_points: tuple[Point, ...] = []
-    for x in range(10):
-        for y in range(10):
-            input_points.append(Point(x, y))
+class TestPerformance(unittest.TestCase):
+    def test_our_performance_on_average_input_size(self):
+        input_points: tuple[Point, ...] = []
+        for x in range(10):
+            for y in range(10):
+                input_points.append(Point(x, y))
 
-    tuple_input = points_to_tuple(input_points)
-    benchmark(ConvexHull, tuple_input)
+        tuple_input = points_to_tuple(input_points)
+        benchmark(ConvexHull, tuple_input)
 
 
 @pytest.mark.benchmark(group="average")
