@@ -1,61 +1,15 @@
-import csv
-import os
-import random as r
 import unittest
 from pathlib import Path
 
 from src.parser import Parser
+from tests.unit.setup import random_size
 
 RESOURCES = Path(__file__).resolve().parent.parent / "resources"
 
 parser: Parser = Parser()
-random_size = r.randint(0, 100)
 
 
 class TestParser(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        """
-        Initialises large and random files for a test run
-        """
-
-        large_file_path: str = RESOURCES / "valid_csv_files" / "large.csv"
-        random_file_path: str = RESOURCES / "valid_csv_files" / "random.csv"
-
-        with (
-            open(large_file_path, "w") as large_file,
-            open(random_file_path, "w") as random_file,
-        ):
-            large_writer, random_writer = (
-                csv.writer(large_file),
-                csv.writer(random_file),
-            )
-            for line in range(600_000):  # 10MB
-                large_writer.writerow(
-                    [
-                        "50",
-                        "50",
-                        "01/09/2022",
-                    ]
-                )
-
-            for line in range(random_size):
-                long, lat = r.randint(-180, 180), r.randint(-90, 90)
-                (
-                    day,
-                    month,
-                    year,
-                ) = (r.randint(1, 28), r.randint(1, 12), r.randint(2001, 2025))
-
-                random_writer.writerow([lat, long, f"{day}/{month}/{year}"])
-
-    @classmethod
-    def tearDownClass(cls):
-        """
-        Deletes large file at the end of a test run to save space
-        """
-        os.remove(RESOURCES / "valid_csv_files" / "large.csv")
-
     def test_exception_thrown_if_csv_is_rejected(self):
         """
         ValueError should be thrown when the dataset .csv file is
@@ -87,7 +41,6 @@ class TestParser(unittest.TestCase):
         for name, expected in expected_counts.items():
             with self.subTest(file=name):
                 path = valid_files / name
-                # print(name)
                 self.assertEqual(expected, len(parser.parse(path)))
 
     def test_ignores_out_of_bounds_lines(self):
