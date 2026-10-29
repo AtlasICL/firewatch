@@ -452,11 +452,5 @@ class TestHullMetamorphic(HullTestCase):
         )
 
 
-class TestHullAgainstReference(HullTestCase):
-    """Compares quickhull with an external convex hull algorithm."""
-
-    pass
-
-
 if __name__ == "__main__":
     unittest.main()
