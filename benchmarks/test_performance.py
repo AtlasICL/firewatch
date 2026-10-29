@@ -31,7 +31,6 @@ class TestPerformance(unittest.TestCase):
         hull_input = HullInput(input_points)
         benchmark(quickhull, hull_input)
 
-
     def test_our_performance_on_large_input_size(self):
         input_points: tuple[Point, ...] = []
         for x in range(100):
@@ -40,7 +39,6 @@ class TestPerformance(unittest.TestCase):
 
         tuple_input = points_to_tuple(input_points)
         benchmark(ConvexHull, tuple_input)
-
 
     def test_scipy_performance_on_large_input_size(self):
         input_points: tuple[Point, ...] = []
@@ -51,7 +49,6 @@ class TestPerformance(unittest.TestCase):
         hull_input = HullInput(input_points)
         benchmark(quickhull, hull_input)
 
-
     def test_our_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
         for p in range(100):
@@ -60,7 +57,6 @@ class TestPerformance(unittest.TestCase):
 
         tuple_input = points_to_tuple(input_points)
         benchmark(ConvexHull, tuple_input)
-
 
     def test_scipy_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
