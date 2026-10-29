@@ -24,16 +24,14 @@ class TestPerformance(unittest.TestCase):
         tuple_input = points_to_tuple(input_points)
         benchmark(ConvexHull, tuple_input)
 
+    def test_scipy_performance_on_average_input_size(self):
+        input_points: tuple[Point, ...] = []
+        for x in range(10):
+            for y in range(10):
+                input_points.append(Point(x, y))
 
-@pytest.mark.benchmark(group="average")
-def test_scipy_performance_on_average_input_size(benchmark):
-    input_points: tuple[Point, ...] = []
-    for x in range(10):
-        for y in range(10):
-            input_points.append(Point(x, y))
-
-    hull_input = HullInput(input_points)
-    benchmark(quickhull, hull_input)
+        hull_input = HullInput(input_points)
+        benchmark(quickhull, hull_input)
 
 
 @pytest.mark.benchmark(group="large")
