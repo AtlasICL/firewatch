@@ -297,3 +297,95 @@ main {
 		transition: none;
 	}
 }
+
+.splash-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	backdrop-filter: blur(6px);
+}
+
+.splash-card {
+	width: 90%;
+	max-width: 465px;
+	padding: 32px;
+	background: var(--surface);
+	color: var(--text);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+}
+
+.splash-steps {
+	margin: 24px 0;
+	padding: 16px 0;
+	border-top: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+}
+
+.splash-steps p {
+	margin: 10px 0;
+}
+
+#startButton {
+	width: 100%;
+	padding: 12px 16px;
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 600;
+	color: white;
+	background: var(--accent);
+	border: none;
+	border-radius: var(--radius);
+	cursor: pointer;
+}
+
+#startButton:hover {
+	background: var(--accent-hover);
+}
+
+.splash-overlay.hidden {
+	display: none;
+}
+
+.map-container {
+	position: relative;
+}
+
+.map-loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 20px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font-size: 12px;
+}
+
+.map-loading[hidden] {
+	display: none;
+}
+
+.loading-spinner {
+	width: 18px;
+	height: 18px;
+	border: 2px solid var(--border);
+	border-top-color: var(--accent);
+	border-radius: 50%;
+	animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
