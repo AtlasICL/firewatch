@@ -61,9 +61,34 @@
 
       <div class="map-container">
         <div id="map"></div>
+
+        <div id="mapLoading" class="map-loading" hidden>
+          <div class="loading-spinner"></div>
+          <span>calculating convex hull...</span>
+        </div>
       </div>
 
     </main>
+
+    <div id="splashOverlay" class="splash-overlay">
+  <div class="splash-card">
+    <h1>Welcome to Firewatch</h1>
+
+    <p>
+      Visualise fire hotspots, map their extent using the Quickhull
+      algorithm, identify settlements within the affected area.
+    </p>
+
+    <div class="splash-steps">
+      <p>1. Select a sample dataset or upload your own CSV.</p>
+      <p>2. View fire hotspots and their extent on the map.</p>
+      <p>3. Explore settlements within the affected area.</p>
+    </div>
+
+    <button id="startButton" type="button">Get Started</button>
+  </div>
+</div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="main.js"></script>
   </body>

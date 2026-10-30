@@ -30,6 +30,7 @@ let currentLoadId = 0;
 async function plotFileAndHull(file) {
   const loadId = ++currentLoadId;
   const isStale = () => loadId !== currentLoadId;
+  hideLoading();
 
   const csvData = await file.text();
   if (isStale()) return;
@@ -57,6 +58,7 @@ async function plotFileAndHull(file) {
     paddingBottomRight: [70, 50],
   });
 
+  showLoading();
   const convexHullCoordinates = await uploadDownloadFile(file);
   if (isStale()) return;
 
@@ -69,6 +71,7 @@ async function plotFileAndHull(file) {
     fillOpacity: 0.4,
   }).addTo(convexHullLayer);
   pointsLayer.bringToFront();
+  hideLoading();
 
   const settlements = await settlementsInRange(hullPoints);
   if (isStale()) return;
@@ -126,6 +129,7 @@ if (uploadButton) {
     try {
       await plotFileAndHull(file);
     } catch (error) {
+      hideLoading();
       console.error(error);
       alert(`Couldn't interpret file: ${error.message}`);
     }
@@ -139,8 +143,26 @@ for (const radio of sampleRadios) {
     try {
       await loadSample(radio.value);
     } catch (error) {
+      hideLoading();
       console.error(error);
       alert(`Couldn't load sample: ${error.message}`);
     }
   });
+}
+
+const splashOverlay = document.getElementById("splashOverlay");
+const startButton = document.getElementById("startButton");
+
+startButton.addEventListener("click", () => {
+  splashOverlay.classList.add("hidden");
+});
+
+const mapLoading = document.getElementById("mapLoading");
+
+function showLoading() {
+  mapLoading.hidden = false;
+}
+
+function hideLoading() {
+  mapLoading.hidden = true;
 }
