@@ -2,5 +2,3 @@ pandas
 boto3
 numpy
 scipy
-pytest
-pytest-benchmark
