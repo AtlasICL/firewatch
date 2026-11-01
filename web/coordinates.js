@@ -1,9 +1,9 @@
 /**
  * Parses CSV text of `latitude,longitude` rows into Leaflet-ready
- * `[latitude, longitude]` pairs. Blank lines are skipped, matching the Python
- * parser.
+ * `[latitude, longitude]` pairs. Rows can have an optional date field.
+ * Skips blank lines.
  *
- * @param {string} csvString - CSV string (each line is x, y).
+ * @param {string} csvString - CSV string (each line is x, y, ...).
  * @returns {[number, number][]} - Parsed output coordinate pair objects.
  * @throws {Error} - Throws is encounters a line with unexpected data.
  */
@@ -15,11 +15,12 @@ export function parseCoordinatesFrom(csvString) {
       continue;
     }
 
-    const vals = line.split(",");
-    const [latitude, longitude] = vals.map(Number);
+    // Coordinates are required, date field is optional
+    const coordinateFields = line.split(",").slice(0, 2);
+    const [latitude, longitude] = coordinateFields.map(Number);
     const isValid =
-      vals.length === 2 &&
-      vals.every((field) => field.trim() !== "") &&
+      coordinateFields.length === 2 &&
+      coordinateFields.every((field) => field.trim() !== "") &&
       Number.isFinite(latitude) &&
       Number.isFinite(longitude);
     if (!isValid) {

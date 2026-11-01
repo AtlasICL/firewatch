@@ -25,7 +25,7 @@ let currentLoadId = 0;
  * Plots the points in a CSV file on the map, and moves the map onto them.
  * Calls quickhull on the set of points, and draws that hull once it returns.
  *
- * @param {File} file - CSV file of `latitude,longitude` rows.
+ * @param {File} file - CSV file of `latitude,longitude[,date]` rows.
  */
 async function plotFileAndHull(file) {
   const loadId = ++currentLoadId;
