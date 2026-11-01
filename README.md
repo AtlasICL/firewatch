@@ -64,8 +64,9 @@ flowchart LR
 
 ### Testing
 
-Run our Python test suite using
+Install the development dependencies, then run our Python test suite using
 ```
+pip install -r requirements-dev.txt
 python3 -m unittest
 ```
 

@@ -10,6 +10,8 @@
 
 ### Testing
 - We use [unittest](https://docs.python.org/3/library/unittest.html).
+- Install the development dependencies (test, benchmark and lint tooling)
+  with `pip install -r requirements-dev.txt`.
 - Run everything with `just test`, or a subset with TODO.
 
 ### Repo hygiene
