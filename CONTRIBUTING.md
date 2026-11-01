@@ -13,6 +13,8 @@
 - Install the development dependencies (test, benchmark and lint tooling)
   with `pip install -r requirements-dev.txt`.
 - Run everything with `just test`, or a subset with TODO.
+- Performance benchmarks live in `benchmarks/` and are left out of
+  `just test` to keep it fast. Run them on demand with `just perf`.
 
 ### Repo hygiene
 - Always rebase, and never merge main into your feature branch. See

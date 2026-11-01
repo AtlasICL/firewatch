@@ -19,6 +19,10 @@ check:
     npx oxlint --deny-warnings --no-error-on-unmatched-pattern
     npx oxfmt --check --no-error-on-unmatched-pattern {{oxfmt_file_types}}
 
-# Run all tests
+# Run the test suite (excludes performance tests)
 test:
-    python3 -m unittest    
+    python3 -m unittest
+
+# Run the performance benchmarks
+perf:
+    python3 -u -m unittest discover --verbose --start-directory benchmarks
