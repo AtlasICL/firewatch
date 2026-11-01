@@ -97,8 +97,15 @@ into two **unequal** parts).
 | -------------------- | -----: |
 | All cases            | $O(n)$ |
 
-In all input configurations, the space complexity of the Quickhull algorithm is
+For all input configurations, the space complexity of the Quickhull algorithm is
 $O(n)$.
+
+Sources:
+> [The Quickhull Algorithm for Convex Hulls. Barber, C. Bradford; Dobkin, David P.; Huhdanpaa, Hannu. In: ACM Transactions on Mathematical Software, Vol. 22, No. 4, 12.1996, p. 469-483.](https://collaborate.princeton.edu/en/publications/the-quickhull-algorithm-for-convex-hulls/)
+<!-- -->
+> [Algorithmic Efficiency in Convex Hull Computation: Insights from 2D and 3D Implementations. Hyun Kwon, Sehong Oh and Jang-Woon Baek, Symmetry 2024](https://www.mdpi.com/2073-8994/16/12/1590)
+<!-- -->
+> [A Proof for a QuickHull Algorithm. Greenfield, Jonathan Scott, 1990](https://surface.syr.edu/record/5915?v=pdf)
 
 ## Dependencies and third-party resources
 
