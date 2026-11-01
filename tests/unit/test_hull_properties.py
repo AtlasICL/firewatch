@@ -441,7 +441,7 @@ class TestHullMetamorphic(HullTestCase):
         """
         original_points_shuffled = self.points.copy()
         for i in range(len(original_points_shuffled) - 1, 0, -1):
-            j = random.randint(0, i + 1)
+            j = random.randint(0, i)
             original_points_shuffled[i], original_points_shuffled[j] = (
                 original_points_shuffled[j],
                 original_points_shuffled[i],
