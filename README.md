@@ -185,6 +185,11 @@ correctness, security, quality, and originality of everything submitted.
 > Why doesn't git fetch origin --prune auto delete the branches that I have
 > locally that have been merged and then deleted in remote?
 <!-- -->
+> How can I optimise aws lambdas?
+<!-- -->
+> How can I overlay a map of various areas of quickhull over an openstreetmap?
+<!-- -->
+> How can I roll back a number of commits in a branch? 
 - How its output was checked: All generative AI output was checked
   manually by our team, and as the coursework requires, no output was
   uncritically accepted. The group remained responsible for correctness,
