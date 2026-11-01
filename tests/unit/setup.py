@@ -1,20 +1,17 @@
 import csv
-import os
 import random as r
 from pathlib import Path
 
 RESOURCES = Path(__file__).resolve().parent.parent / "resources"
+LARGE_FILE_PATH: Path = RESOURCES / "valid_csv_files" / "large.csv"
+RANDOM_FILE_PATH: Path = RESOURCES / "valid_csv_files" / "random.csv"
 random_size = r.randint(0, 100)
 
 
 def setup():
-
-    large_file_path: str = RESOURCES / "valid_csv_files" / "large.csv"
-    random_file_path: str = RESOURCES / "valid_csv_files" / "random.csv"
-
     with (
-        open(large_file_path, "w") as large_file,
-        open(random_file_path, "w") as random_file,
+        open(LARGE_FILE_PATH, "w") as large_file,
+        open(RANDOM_FILE_PATH, "w") as random_file,
     ):
         large_writer, random_writer = (
             csv.writer(large_file),
@@ -42,6 +39,8 @@ def setup():
 
 def teardown():
     """
-    Deletes large file at the end of a test run to save space
+    Deletes the generated files at the end of a test run, so they
+    don't take up space or show up as changes in git.
     """
-    os.remove(RESOURCES / "valid_csv_files" / "large.csv")
+    LARGE_FILE_PATH.unlink(missing_ok=True)
+    RANDOM_FILE_PATH.unlink(missing_ok=True)
