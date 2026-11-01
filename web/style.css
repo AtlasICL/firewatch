@@ -264,6 +264,152 @@ main {
 	cursor: not-allowed;
 }
 
+
+.page-links {
+	margin-top: auto;
+}
+
+.page-links-buttons {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.page-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 12px 16px;
+
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--surface);
+	box-shadow: 0 2px 8px rgb(0 0 0 / 3%);
+
+	color: var(--text);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+
+	transition:
+		background-color 180ms ease,
+		border-color 180ms ease,
+		box-shadow 180ms ease,
+		transform 180ms ease;
+}
+
+.page-link:hover {
+	background: var(--surface-hover);
+	border-color: var(--accent);
+	box-shadow: 0 4px 16px rgb(0 0 0 / 7%);
+	transform: translateY(-2px);
+}
+
+.page-link:active {
+	transform: translateY(0);
+	box-shadow: none;
+}
+
+.page-link:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+/* Page layout */
+
+main.page {
+	display: block;
+	width: 100%;
+	max-width: 860px;
+	height: auto;
+	margin-inline: auto;
+	padding: 32px 24px 64px;
+}
+
+.page h1 {
+	margin: 24px 0 28px;
+
+	color: var(--text);
+	font-size: clamp(24px, 3vw, 32px);
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
+}
+
+/* Navigation */
+
+.back-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+
+	color: var(--text-subtle);
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.5;
+	text-decoration: none;
+
+	transition: color 180ms ease;
+}
+
+.back-link:hover {
+	color: var(--accent);
+}
+
+.back-link:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 4px;
+	border-radius: 2px;
+}
+
+/* Content */
+
+.pseudocode-image {
+	display: block;
+	width: 100%;
+	height: auto;
+
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--surface);
+	box-shadow: 0 4px 24px rgb(0 0 0 / 4%);
+}
+
+/* Responsive */
+
+@media (max-width: 480px) {
+	main.page {
+		padding: 24px 16px 48px;
+	}
+
+	.page h1 {
+		margin: 20px 0 24px;
+	}
+
+	.page-links-buttons {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+	.page-link,
+	.back-link {
+		transition: none;
+	}
+
+	.page-link:hover {
+		transform: none;
+	}
+}
+
+
 /* Map */
 
 .map-container,
@@ -293,7 +439,8 @@ main {
 	.choice,
 	.choice input,
 	.file-label,
-	#uploadButton {
+	#uploadButton,
+	.page-link {
 		transition: none;
 	}
 }
