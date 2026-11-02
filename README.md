@@ -116,7 +116,7 @@ Sources:
 
 ## Test Cases
 
-# Framework
+### Framework
 We implement a HullTestCase class which contains methods used to verify the properties of each hull we test; a robust and generic tool which ensures that each convex hull generated from a set of points is valid. These checks are applied via the methods ‘assert_is_convex_hull_of’, and ‘assert_same_cycle’. 
 
 assert_is_convex_hull_of verifies that, for a set of points:
@@ -129,12 +129,12 @@ assert_same_cycle verifies that, for a list of points in a hull, the points are 
 
 A setup.py file is also used to initialise additional files required before the test suite begins and remove them following its conclusion. The files in question are large.csv, a file too large to be stored permanently, and random.csv, which contains data which is randomised in-between runs. 
 
-# Hull Check
+### Hull Check
 Here we verify that the ‘assert_point_inside_convex_hull’ function used by ‘assert_is_convex_hull_of’ correctly identifies when a point is inside a convex hull. We test:
 - Does ‘assert_point_inside_convex_hull’ accept points strictly inside the hull.
 - Does ‘assert_point_inside_convex_hull’ accept points on the border of the hull – cases include a corner and all edges
 
-# Hull Input
+### Hull Input
 We test that the HullInput and Point classes accept valid inputs and reject invalid inputs to ensure that hulls can only be created using valid inputs.
 
 Cases for Point:
@@ -147,7 +147,7 @@ Cases for HullInput:
 - HullInput requires at least two unique points and throws ValueError if less are given – we test with one Point, Zero Points, and multiple repeats of the same Point.
 - HullInput accepts cases with two or more unique points – we test boundary cases with two points and three points with one duplicate, as well as real sample data with more than two points.
 
-# Hull Examples
+### Hull Examples
 We test that our quickhull algorithm produces the expected outcome on a variety of hand-picked point sets using ‘assert_same_cycle’ and ‘assert_is_convex_hull_of’. 
 
 Cases are as follows:
@@ -163,7 +163,7 @@ Cases are as follows:
 - For a set of points where multiple are tied for the leftmost point, a convex hull will be created including the point with the lowest y—value.
 - For a set of points where multiple are tied for the rightmost point, a convex hull will be created including the point with the highest y—value.
 
-# Hull Properties
+### Hull Properties
 Metamorphic tests are implemented to verify that input alterations change or do not change the output as expected. We apply changes to a valid, real data mixed set of points including positive, negative, integer, and float values.
 
 We test:
@@ -179,10 +179,10 @@ We test:
 - Rotating a hull’s co-ordinates does not alter the order of the subsequent hull cycle. Cases include rotating x and y clockwise/counterclockwise; rotating x or y alone clockwise/counterclockwise.
 - Re-ordering the input list of points does not affect the subsequent hull cycle ordering. 
 
-# Hull Scale
+### Hull Scale
 We verify that our algorithm is able to produce a valid convex hull for an extremely large number of points (600,000) and doesn’t throw an exception to high input load. 
 
-# Parser
+### Parser
 We test that the parser rejects invalid CSV formats and outputs a dictionary of the expected length for valid inputs; this includes inputs with out-of-bounds lines, which should be ignored for the dictionary output.
 
 Valid cases:
@@ -214,7 +214,7 @@ Out-Of-Bounds Cases:
 - A CSV with multiple out-of-bounds fields in different lines
 - A CSV where all lines contain out-of-bounds data; effectively empty.
 
-# Benchmarking
+### Benchmarking
 We compare the time performance of our quickhull algorithm to the standard scipy implementation using a custom function defined in benchmark_timing.py. 
 
 Performance test cases:
@@ -222,7 +222,7 @@ Performance test cases:
 - Average input size of 100 random points
 - Large input size of 10,000 points
 
-# Results
+### Results
 All tests pass, time performance is marginally inferior to scipy variant.
 
 ## Limitations
