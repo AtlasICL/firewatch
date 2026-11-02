@@ -52,5 +52,5 @@ git rebase main
 
 If at this point, git has rebased successfully, then you can `git stash pop`.
 If, on the other hand, there are merge conflicts, then resolve them in VS Code,
-and once finished resolving, run `git rebase --continue` (after which you can do
-`git stash pop`).
+and once finished resolving, run `git rebase --continue` (after which you can
+do `git stash pop`).

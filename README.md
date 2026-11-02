@@ -9,7 +9,8 @@
 
 ## URL
 
-The website is live at [satellitefirewatch.com](https://satellitefirewatch.com).
+The website is live at
+[satellitefirewatch.com](https://satellitefirewatch.com).
 
 ## Install
 
@@ -110,8 +111,8 @@ into two **unequal** parts).
 | -------------------- | -----: |
 | All cases            | $O(n)$ |
 
-For all input configurations, the space complexity of the Quickhull algorithm is
-$O(n)$.
+For all input configurations, the space complexity of the Quickhull algorithm
+is $O(n)$.
 
 Sources:
 
@@ -163,7 +164,8 @@ Here we verify that the `assert_point_inside_convex_hull` function used by
 `assert_is_convex_hull_of` correctly identifies when a point is inside a convex
 hull. We test:
 
-- Does `assert_point_inside_convex_hull` accept points strictly inside the hull.
+- Does `assert_point_inside_convex_hull` accept points strictly inside the
+  hull.
 - Does `assert_point_inside_convex_hull` accept points on the border of the
   hull - cases include a corner and all edges
 
@@ -174,8 +176,8 @@ invalid inputs to ensure that hulls can only be created using valid inputs.
 
 Cases for `Point`:
 
-- `Point` class accepts a mix of integers, floats, positive, and negative values
-  for input.
+- `Point` class accepts a mix of integers, floats, positive, and negative
+  values for input.
 - `Point` class rejects non-numeric inputs - these include strings, Booleans,
   arrays, and null values with `TypeError`.
 - `Point` class rejects nan and infinite values with `ValueError`
@@ -226,29 +228,29 @@ We test:
 
 - Appending an additional boundary point to the set of points will result in a
   hull including that additional hull
-- Appending an additional interior point to the set of points will result in the
-  same hull.
+- Appending an additional interior point to the set of points will result in
+  the same hull.
 - Moving a point to the boundary of a hull changes the hull cycle order and the
   moved point is a part of the hull.
 - Moving a hull boundary point to a different position on the hull boundary
   maintains the hull order and includes moved point.
 - Removing a boundary point from the set of points doesn’t affect hull order
-- Removing an interior point from the set of points doesn’t affect hull order or
-  elements
+- Removing an interior point from the set of points doesn’t affect hull order
+  or elements
 - Translating the points in the graph does not affect the hull order or
   elements; translation cases include adding/subtracting from x and y;
   adding/subtracting x or y alone.
 - Reflecting a hull’s co-ordinates does not alter the order of the subsequent
-  hull cycle. Reflection is performed in the x and y axes alone, as well as both
-  simultaneously.
+  hull cycle. Reflection is performed in the x and y axes alone, as well as
+  both simultaneously.
 - Scaling a hull’s co-ordinates does not alter the order of the subsequent hull
   cycle. Cases includes multiplying/dividing x and y; multiplying/dividing x or
   y alone.
-- Rotating a hull’s co-ordinates does not alter the order of the subsequent hull
-  cycle. Cases include rotating x and y clockwise/counterclockwise; rotating x
-  or y alone clockwise/counterclockwise.
-- Re-ordering the input list of points does not affect the subsequent hull cycle
-  ordering.
+- Rotating a hull’s co-ordinates does not alter the order of the subsequent
+  hull cycle. Cases include rotating x and y clockwise/counterclockwise;
+  rotating x or y alone clockwise/counterclockwise.
+- Re-ordering the input list of points does not affect the subsequent hull
+  cycle ordering.
 
 ### Hull Scale
 
@@ -296,8 +298,8 @@ Out-Of-Bounds Cases:
 
 ### Benchmarking
 
-We compare the time performance of our quickhull algorithm to the standard scipy
-implementation using a custom function defined in `benchmark_timing.py`.
+We compare the time performance of our quickhull algorithm to the standard
+scipy implementation using a custom function defined in `benchmark_timing.py`.
 
 Performance test cases:
 
@@ -411,6 +413,6 @@ correctness, security, quality, and originality of everything submitted.
 <!-- -->
 
 - How its output was checked: All generative AI output was checked manually by
-  our team, and as the coursework requires, no output was uncritically accepted.
-  The group remained responsible for correctness, security, etc throughout the
-  project.
+  our team, and as the coursework requires, no output was uncritically
+  accepted. The group remained responsible for correctness, security, etc
+  throughout the project.
