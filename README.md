@@ -68,9 +68,21 @@ flowchart LR
 
 Install the development dependencies, then run our Python test suite using
 
+### macOS / Linux
+
 ```sh
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements-dev.txt
 python3 -m unittest
+```
+### Windows PowerShell
+
+```sh
+python -m venv venv
+.venv/bin/Scripts/Activate.ps1
+pip install -r requirements-dev.txt
+python -m unittest
 ```
 
 We have a mix of white-box and black-box testing.
@@ -300,7 +312,11 @@ correctness, security, quality, and originality of everything submitted.
 <!-- -->
 > How can I overlay a map of various areas of quickhull over an openstreetmap?
 <!-- -->
-> How can I roll back a number of commits in a branch? 
+> How can I roll back a number of commits in a branch?
+<!-- -->
+> How can I safely clean my branch's Git history so that it contains only
+> the commits directly to that branch?
+<!-- -->
 - How its output was checked: All generative AI output was checked
   manually by our team, and as the coursework requires, no output was
   uncritically accepted. The group remained responsible for correctness,

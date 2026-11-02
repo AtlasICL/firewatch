@@ -14,11 +14,9 @@
 ### Testing
 
 - We use [unittest](https://docs.python.org/3/library/unittest.html).
-- Install the development dependencies (test, benchmark and lint tooling) with
+- Install the development dependencies with
   `pip install -r requirements-dev.txt`.
-- Run everything with `just test`, or a subset with TODO.
-- Performance benchmarks live in `benchmarks/` and are left out of `just test`
-  to keep it fast. Run them on demand with `just perf`.
+- Run the test suite with `just test`.
 
 ### Repo hygiene
 
