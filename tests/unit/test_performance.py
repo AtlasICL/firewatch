@@ -3,18 +3,21 @@ import unittest
 
 from scipy.spatial import ConvexHull
 
-from benchmarks.benchmark_timing import benchmark
 from src.point import HullInput, Point
 from src.quickhull import quickhull
+from tests.unit.test_benchmark_timing import benchmark
 
 
 def points_to_tuple(points: list[Point]):
     return list(map(lambda p: (p.x, p.y), points))
 
+
 """
 Compares our implementation of the Quickhull algorithm against that of
 SciPy, using several performance benchmarks.
 """
+
+
 class TestPerformance(unittest.TestCase):
     def test_our_performance_on_average_input_size(self):
         input_points: tuple[Point, ...] = []
