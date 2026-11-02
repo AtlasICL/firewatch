@@ -168,7 +168,7 @@ correctness, security, quality, and originality of everything submitted.
 > How can I roll back a number of commits in a branch?
 <!-- -->
 > How can I safely clean my branch's Git history so that it contains only
-/the commits directly to that branch?
+> the commits directly to that branch?
 <!-- -->
 - How its output was checked: All generative AI output was checked
   manually by our team, and as the coursework requires, no output was
