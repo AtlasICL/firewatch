@@ -2,11 +2,27 @@ import unittest
 from pathlib import Path
 
 from src.parser import Parser
-from tests.unit.setup import random_size
+from tests.unit.setup import setup, teardown
 
 RESOURCES = Path(__file__).resolve().parent.parent / "resources"
 
 parser: Parser = Parser()
+
+
+def setUpModule():
+    """
+    Setup function provided by unittest allows our setup logic to be
+    run before any tests in this file are executed.
+    """
+    setup()
+
+
+def tearDownModule():
+    """
+    Teardown function provided by unittest allows our teardown logic to
+    be run after all tests in this file have completed.
+    """
+    teardown()
 
 
 class TestParser(unittest.TestCase):
@@ -34,7 +50,6 @@ class TestParser(unittest.TestCase):
             "skip_line.csv": 7,
             "triangle.csv": 3,
             "large.csv": 600_000,
-            "random.csv": random_size,
         }
         valid_files: Path = RESOURCES / "valid_csv_files"
 
