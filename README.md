@@ -81,31 +81,7 @@ We have a mix of white-box and black-box testing.
 
 ## Time and space complexity
 
-| **Time complexity** |                  |
-| ------------------- | ---------------: |
-| Average             | $O(n \: log(n))$ |
-| Worst case          |         $O(n^2)$ |
 
-On average, the time complexity of the Quickhull algorithm is $O(n \: log(n))$,
-with $n$ being the number of points. However, certain configurations of inputs
-can lead to a worst case time complexity of $O(n^2)$, due to recursion (in the
-divide and conquer strategy) not creating an efficient partitioning of work
-(unbalanced partitions cause every "division" to be a partitioning of the work
-into two **unequal** parts).
-
-| **Space complexity** |        |
-| -------------------- | -----: |
-| All cases            | $O(n)$ |
-
-For all input configurations, the space complexity of the Quickhull algorithm is
-$O(n)$.
-
-Sources:
-> [The Quickhull Algorithm for Convex Hulls. Barber, C. Bradford; Dobkin, David P.; Huhdanpaa, Hannu. In: ACM Transactions on Mathematical Software, Vol. 22, No. 4, 12.1996, p. 469-483.](https://collaborate.princeton.edu/en/publications/the-quickhull-algorithm-for-convex-hulls/)
-<!-- -->
-> [Algorithmic Efficiency in Convex Hull Computation: Insights from 2D and 3D Implementations. Hyun Kwon, Sehong Oh and Jang-Woon Baek, Symmetry 2024](https://www.mdpi.com/2073-8994/16/12/1590)
-<!-- -->
-> [A Proof for a QuickHull Algorithm. Greenfield, Jonathan Scott, 1990](https://surface.syr.edu/record/5915?v=pdf)
 
 ## Dependencies and third-party resources
 
