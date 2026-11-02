@@ -573,3 +573,21 @@ main.page {
   cursor: pointer;
 }
 
+.leaflet-control-layers {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: var(--text);
+	font-family: inherit;
+}
+
+.leaflet-control-layers label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+}
+
+.leaflet-control-layers-selector {
+	accent-color: var(--accent);
+}

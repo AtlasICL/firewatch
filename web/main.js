@@ -5,11 +5,29 @@ import { uploadDownloadFile } from "./upload_download.js";
 // Initialise map instance, with initial view of London
 const map = L.map("map").setView([51.505, -0.09], 13);
 map.zoomControl.setPosition("topright");
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+
+const terrain = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  attribution: '&copy; OpenStreetMap contributors, SRTM | OpenTopoMap (CC-BY-SA)'
+});
+
+const satellite = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    maxZoom: 19,
+    attribution: 'Tiles &copy; Esri and imagery providers'
+  }
+);
+
+satellite.addTo(map);
+L.control.layers({
+  "Terrain": terrain,
+  "Satellite": satellite
+}, null, {
+  position: "topright",
+  //collapsed: false
 }).addTo(map);
+
 
 // Layers for the currently displayed dataset.
 const pointsLayer = L.featureGroup().addTo(map);
