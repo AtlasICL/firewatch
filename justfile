@@ -22,3 +22,6 @@ check:
 # Run the test suite
 test:
     python3 -m unittest
+
+perf:
+    python3 -m unittest discover -s benchmarks -p "test_*.py"

@@ -6,9 +6,9 @@ from src.point import HullInput, Point
 
 class TestPoint(unittest.TestCase):
     def test_accepts_int_and_float_mixed_coordinates(self):
-        point = Point(-3.4, 1.5)
+        point = Point(-3.4, 1)
         self.assertEqual(point.x, -3.4)
-        self.assertEqual(point.y, 1.5)
+        self.assertEqual(point.y, 1)
 
     def test_rejects_non_numeric_coordinates(self):
         non_numerical_pairs = [
@@ -29,8 +29,8 @@ class TestPoint(unittest.TestCase):
                 Point(*pair)
 
     def test_rejects_incorrect_num_args(self):
-        incorrrect_num_agrs = [[4], [], [3, 1, 2]]
-        for pair in incorrrect_num_agrs:
+        incorrrect_num_args = [[4], [], [3, 1, 2]]
+        for pair in incorrrect_num_args:
             with self.assertRaises(TypeError):
                 Point(*pair)
 

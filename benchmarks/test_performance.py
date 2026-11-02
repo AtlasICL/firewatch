@@ -3,9 +3,9 @@ import unittest
 
 from scipy.spatial import ConvexHull
 
+from benchmarks.benchmark_timing import benchmark
 from src.point import HullInput, Point
 from src.quickhull import quickhull
-from tests.unit.test_benchmark_timing import benchmark
 
 
 def points_to_tuple(points: list[Point]):
@@ -26,6 +26,7 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
+        print("Our performance on average input size:")
         benchmark(ConvexHull, tuple_input)
 
     def test_scipy_performance_on_average_input_size(self):
@@ -35,6 +36,7 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
+        print("Scipy performance on average input size:")
         benchmark(quickhull, hull_input)
 
     def test_our_performance_on_large_input_size(self):
@@ -44,6 +46,7 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
+        print("Our performance on large input size:")
         benchmark(ConvexHull, tuple_input)
 
     def test_scipy_performance_on_large_input_size(self):
@@ -53,6 +56,7 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
+        print("Scipy performance on large input size:")
         benchmark(quickhull, hull_input)
 
     def test_our_performance_on_random_inputs(self):
@@ -62,6 +66,7 @@ class TestPerformance(unittest.TestCase):
             input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
+        print("Our performance on random inputs:")
         benchmark(ConvexHull, tuple_input)
 
     def test_scipy_performance_on_random_inputs(self):
@@ -71,4 +76,5 @@ class TestPerformance(unittest.TestCase):
             input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
+        print("Scipy performance on random inputs:")
         benchmark(quickhull, hull_input)
