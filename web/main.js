@@ -117,11 +117,24 @@ if (fileInput) {
   });
 }
 
+const errorOverlay = document.getElementById("errorOverlay");
+const errorMessage = document.getElementById("errorMessage");
+const errorDismissButton = document.getElementById("errorDismissButton");
+
+function showError(message) {
+  errorMessage.textContent = message;
+  errorOverlay.classList.remove("hidden");
+}
+
+errorDismissButton.addEventListener("click", () => {
+  errorOverlay.classList.add("hidden");
+});
+
 // File upload button logic.
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
     if (!file) {
-      alert("Please choose a CSV to upload.");
+      showError("Please choose a CSV to upload.");
       return;
     }
     // Uploaded file replaces whichever sample was shown.
@@ -131,7 +144,7 @@ if (uploadButton) {
     } catch (error) {
       hideLoading();
       console.error(error);
-      alert(`Couldn't interpret file: ${error.message}`);
+      showError(`Couldn't interpret file: ${error.message}`);
     }
   });
 }

@@ -540,3 +540,36 @@ main.page {
 	}
 }
 
+.error-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(17, 26, 43, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.error-overlay.hidden {
+  display: none;
+}
+
+.error-card {
+  width: 90%;
+  max-width: 420px;
+  padding: 32px;
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+
+#errorDismissButton {
+  width: 100%;
+  font: inherit;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
