@@ -144,20 +144,20 @@ A `setup.py` file is also used to initialise additional files required before th
 ### Hull Check
 Here we verify that the `assert_point_inside_convex_hull` function used by `assert_is_convex_hull_of` correctly identifies when a point is inside a convex hull. We test:
 - Does `assert_point_inside_convex_hull` accept points strictly inside the hull.
-- Does `assert_point_inside_convex_hull` accept points on the border of the hull – cases include a corner and all edges
+- Does `assert_point_inside_convex_hull` accept points on the border of the hull - cases include a corner and all edges
 
 ### Hull Input
 We test that the `HullInput` and `Point` classes accept valid inputs and reject invalid inputs to ensure that hulls can only be created using valid inputs.
 
 Cases for `Point`:
 - `Point` class accepts a mix of integers, floats, positive, and negative values for input.
-- `Point` class rejects non-numeric inputs – these include strings, Booleans, arrays, and null values with `TypeError`. 
+- `Point` class rejects non-numeric inputs - these include strings, Booleans, arrays, and null values with `TypeError`. 
 - `Point` class rejects nan and infinite values with `ValueError`
 - `Point` class only accepts two arguments for input, and for any other amount throws `TypeError`
 
 Cases for `HullInput`:
-- `HullInput` requires at least two unique points and throws `ValueError` if less are given – we test with one `Point`, zero Points, and multiple repeats of the same `Point`.
-- `HullInput` accepts cases with two or more unique points – we test boundary cases with two points and three points with one duplicate, as well as real sample data with more than two points.
+- `HullInput` requires at least two unique points and throws `ValueError` if less are given - we test with one `Point`, zero Points, and multiple repeats of the same `Point`.
+- `HullInput` accepts cases with two or more unique points - we test boundary cases with two points and three points with one duplicate, as well as real sample data with more than two points.
 
 ### Hull Examples
 We test that our quickhull algorithm produces the expected outcome on a variety of hand-picked point sets using `assert_same_cycle` and `assert_is_convex_hull_of`. 
@@ -217,7 +217,7 @@ Invalid Cases:
 - A CSV missing its longitude field
 - A CSV where one element misses longitude
 - A CSV with lines missing commas
-- A file with the wrong file type – zip file not CSV.
+- A file with the wrong file type - zip file not CSV.
 
 Out-Of-Bounds Cases:
 - A CSV with dates in the future and before satellite data was made available
