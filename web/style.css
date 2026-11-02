@@ -476,6 +476,10 @@ main.page {
 	margin: 10px 0;
 }
 
+.splash-overlay.hidden {
+    display: none;
+}
+
 #startButton {
 	width: 100%;
 	padding: 12px 16px;

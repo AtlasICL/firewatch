@@ -153,8 +153,13 @@ for (const radio of sampleRadios) {
 const splashOverlay = document.getElementById("splashOverlay");
 const startButton = document.getElementById("startButton");
 
+if (sessionStorage.getItem("splashSeen") === "true") {
+  splashOverlay.classList.add("hidden");
+}
+
 startButton.addEventListener("click", () => {
   splashOverlay.classList.add("hidden");
+  sessionStorage.setItem("splashSeen", "true");
 });
 
 const mapLoading = document.getElementById("mapLoading");
