@@ -5,11 +5,38 @@ import { uploadDownloadFile } from "./upload_download.js";
 // Initialise map instance, with initial view of London
 const map = L.map("map").setView([51.505, -0.09], 13);
 map.zoomControl.setPosition("topright");
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-}).addTo(map);
+
+const terrain = L.tileLayer(
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution:
+      "&copy; OpenStreetMap contributors, SRTM | OpenTopoMap (CC-BY-SA)",
+  },
+);
+
+const satellite = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    maxZoom: 19,
+    attribution: "Tiles &copy; Esri and imagery providers",
+  },
+);
+
+satellite.addTo(map);
+L.control
+  .layers(
+    {
+      Terrain: terrain,
+      Satellite: satellite,
+    },
+    null,
+    {
+      position: "topright",
+      //collapsed: false
+    },
+  )
+  .addTo(map);
 
 // Layers for the currently displayed dataset.
 const pointsLayer = L.featureGroup().addTo(map);
@@ -117,11 +144,24 @@ if (fileInput) {
   });
 }
 
+const errorOverlay = document.getElementById("errorOverlay");
+const errorMessage = document.getElementById("errorMessage");
+const errorDismissButton = document.getElementById("errorDismissButton");
+
+function showError(message) {
+  errorMessage.textContent = message;
+  errorOverlay.classList.remove("hidden");
+}
+
+errorDismissButton.addEventListener("click", () => {
+  errorOverlay.classList.add("hidden");
+});
+
 // File upload button logic.
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
     if (!file) {
-      alert("Please choose a CSV to upload.");
+      showError("Please choose a CSV to upload.");
       return;
     }
     // Uploaded file replaces whichever sample was shown.
@@ -131,7 +171,7 @@ if (uploadButton) {
     } catch (error) {
       hideLoading();
       console.error(error);
-      alert(`Couldn't interpret file: ${error.message}`);
+      showError(`Couldn't interpret file: ${error.message}`);
     }
   });
 }
@@ -153,8 +193,13 @@ for (const radio of sampleRadios) {
 const splashOverlay = document.getElementById("splashOverlay");
 const startButton = document.getElementById("startButton");
 
+if (sessionStorage.getItem("splashSeen") === "true") {
+  splashOverlay.classList.add("hidden");
+}
+
 startButton.addEventListener("click", () => {
   splashOverlay.classList.add("hidden");
+  sessionStorage.setItem("splashSeen", "true");
 });
 
 const mapLoading = document.getElementById("mapLoading");
