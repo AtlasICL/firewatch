@@ -77,7 +77,9 @@ async function plotFileAndHull(file) {
       weight: 1,
       fillColor: "#eb0707",
       fillOpacity: 0.95,
-    }).addTo(pointsLayer);
+    })
+      .bindPopup(point[0] + ", " + point[1])
+      .addTo(pointsLayer);
   }
 
   map.fitBounds(pointsLayer.getBounds(), {
