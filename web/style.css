@@ -563,14 +563,30 @@ main.page {
   border-radius: var(--radius);
 }
 
-#errorDismissButton {
-  width: 100%;
-  font: inherit;
-  background: var(--accent);
-  color: white;
-  border: none;
+.error-card pre {
+  background: var(--bg);
+  padding: 12px;
   border-radius: var(--radius);
-  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+#errorDismissButton {
+	display: block;
+	width: 100%;
+	margin-top: 12px;
+	padding: 12px 16px;
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 600;
+	color: #fff;
+	background: var(--accent);
+	border: 1px solid transparent;
+	border-radius: var(--radius);
+	cursor: pointer;
+	transition:
+		background-color 160ms ease,
+		transform 160ms ease;
 }
 
 .leaflet-control-layers {

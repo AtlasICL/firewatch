@@ -106,8 +106,13 @@
 
 <div id="errorOverlay" class="error-overlay hidden">
   <div class="error-card">
-    <h2>Unable to load file</h2>
-    <p id="errorMessage">Please enter a valid CSV file.</p>
+    <h2>Invalid CSV file</h2>
+    <p>Your CSV must contain two columns of coordinates () without headers.</p>
+    <p>Example of a valid CSV:</p>
+    <pre>-3.5350,50.7350
+-3.5335,50.7362
+-3.5318,50.7345
+    </pre>
     <button id="errorDismissButton" type="button">I understand</button>
   </div>
 </div>
