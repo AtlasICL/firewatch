@@ -591,3 +591,28 @@ main.page {
 .leaflet-control-layers-selector {
 	accent-color: var(--accent);
 }
+
+.leaflet-container .leaflet-popup-content {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.leaflet-container .leaflet-popup-close-button {
+  color: var(--text);
+}
+
+.leaflet-control-layers {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.leaflet-control-layers-selector {
+  accent-color: var(--accent);
+}
