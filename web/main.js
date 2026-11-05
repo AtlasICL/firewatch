@@ -147,23 +147,20 @@ if (fileInput) {
 }
 
 const errorOverlay = document.getElementById("errorOverlay");
-const errorMessage = document.getElementById("errorMessage");
 const errorDismissButton = document.getElementById("errorDismissButton");
 
-function showError(message) {
-  errorMessage.textContent = message;
+function showError() {
   errorOverlay.classList.remove("hidden");
 }
 
 errorDismissButton.addEventListener("click", () => {
   errorOverlay.classList.add("hidden");
 });
-
 // File upload button logic.
 if (uploadButton) {
   uploadButton.addEventListener("click", async () => {
     if (!file) {
-      showError("Please choose a CSV to upload.");
+      showError();
       return;
     }
     // Uploaded file replaces whichever sample was shown.
@@ -173,7 +170,7 @@ if (uploadButton) {
     } catch (error) {
       hideLoading();
       console.error(error);
-      showError(`Couldn't interpret file: ${error.message}`);
+      showError();
     }
   });
 }
