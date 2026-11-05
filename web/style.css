@@ -296,21 +296,12 @@ main {
 
 	transition:
 		background-color 180ms ease,
-		border-color 180ms ease,
-		box-shadow 180ms ease,
-		transform 180ms ease;
+		border-color 180ms ease;
 }
 
 .page-link:hover {
 	background: var(--surface-hover);
 	border-color: var(--accent);
-	box-shadow: 0 4px 16px rgb(0 0 0 / 7%);
-	transform: translateY(-2px);
-}
-
-.page-link:active {
-	transform: translateY(0);
-	box-shadow: none;
 }
 
 .page-link:focus-visible {
@@ -402,10 +393,6 @@ main.page {
 	.page-link,
 	.back-link {
 		transition: none;
-	}
-
-	.page-link:hover {
-		transform: none;
 	}
 }
 
