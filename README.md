@@ -136,12 +136,14 @@ Sources:
 
 ## Test Cases
 
-### Framework
+### Framework for testing
+
+All tests used Python's "unittest" library, which is the built-in Python
+testing library.
 
 We implement a `HullTestCase` class which contains methods used to verify the
-properties of each hull we test; a robust and generic tool which ensures that
-each convex hull generated from a set of points is valid. These checks are
-applied via the methods `assert_is_convex_hull_of`, and `assert_same_cycle`.
+properties of each hull we test. These checks are applied via the methods
+`assert_is_convex_hull_of` and `assert_same_cycle`.
 
 `assert_is_convex_hull_of` verifies that, for a set of points:
 
@@ -159,23 +161,10 @@ the test suite begins and remove them following its conclusion. The files in
 question are `large.csv`, a file too large to be stored permanently, and
 `random.csv`, which contains data which is randomised in-between runs.
 
-### Hull Check
-
-Here we verify that the `assert_point_inside_convex_hull` function used by
-`assert_is_convex_hull_of` correctly identifies when a point is inside a convex
-hull. We test:
-
-- Does `assert_point_inside_convex_hull` accept points strictly inside the
-  hull.
-- Does `assert_point_inside_convex_hull` accept points on the border of the
-  hull - cases include a corner and all edges
-
 ### Hull Input
 
 We test that the `HullInput` and `Point` classes accept valid inputs and reject
 invalid inputs to ensure that hulls can only be created using valid inputs.
-
-Cases for `Point`:
 
 - `Point` class accepts a mix of integers, floats, positive, and negative
   values for input.
@@ -184,9 +173,6 @@ Cases for `Point`:
 - `Point` class rejects nan and infinite values with `ValueError`
 - `Point` class only accepts two arguments for input, and for any other amount
   throws `TypeError`
-
-Cases for `HullInput`:
-
 - `HullInput` requires at least two unique points and throws `ValueError` if
   less are given - we test with one `Point`, zero Points, and multiple repeats
   of the same `Point`.
@@ -197,10 +183,7 @@ Cases for `HullInput`:
 ### Hull Examples
 
 We test that our quickhull algorithm produces the expected outcome on a variety
-of hand-picked point sets using `assert_same_cycle` and
-`assert_is_convex_hull_of`.
-
-Cases are as follows:
+of hand-picked point sets:
 
 - A valid, real data mixed set of points including positive, negative, integer,
   and float values.
@@ -214,18 +197,12 @@ Cases are as follows:
 - A convex hull will be created from a set of diagonally collinear points.
 - A convex hull will be created from a set of vertically collinear points.
 - A convex hull will be created from a set of floating points values
-- For a set of points where multiple are tied for the leftmost point, a convex
-  hull will be created including the point with the lowest y—value.
-- For a set of points where multiple are tied for the rightmost point, a convex
-  hull will be created including the point with the highest y—value.
 
 ### Hull Properties
 
 Metamorphic tests are implemented to verify that input alterations change or do
 not change the output as expected. We apply changes to a valid, real data mixed
-set of points including positive, negative, integer, and float values.
-
-We test:
+set of points including positive, negative, integer, and float values:
 
 - Appending an additional boundary point to the set of points will result in a
   hull including that additional hull
@@ -252,12 +229,6 @@ We test:
   rotating x or y alone clockwise/counterclockwise.
 - Re-ordering the input list of points does not affect the subsequent hull
   cycle ordering.
-
-### Hull Scale
-
-We verify that our algorithm is able to produce a valid convex hull for an
-extremely large number of points (600,000) and doesn’t throw an exception to
-high input load.
 
 ### Parser
 
@@ -297,12 +268,13 @@ Out-Of-Bounds Cases:
 - A CSV with multiple out-of-bounds fields in different lines
 - A CSV where all lines contain out-of-bounds data; effectively empty.
 
-### Benchmarking
+### Benchmarking tests
+
+We verify that our algorithm is able to produce a valid convex hull for an
+extremely large number of points (600,000).
 
 We compare the time performance of our quickhull algorithm to the standard
-scipy implementation using a custom function defined in `benchmark_timing.py`.
-
-Performance test cases:
+scipy implementation using a custom function defined in `benchmark_timing.py`:
 
 - Average input size of 100 points
 - Average input size of 100 random points
