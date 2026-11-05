@@ -315,7 +315,13 @@ whereas scipy takes ~0.004s.
 
 ## Limitations
 
-TODO
+While we are happy with the level of polish we were able to implement within
+the allotted timeframe, this version of our product nevertheless presents some
+limitations:
+
+- The settlements dataset is not as comprehensive as we would have hoped for.
+  This would be a natural area for future development.
+- Live API integration is another stretch goal for future development.
 
 ## Individual Contributions
 
