@@ -335,7 +335,6 @@ TODO
     and test running using GitHub Actions.
   - Set up repository rules for engineering best practices (branch protections,
     custom CONTRIBUTING.md style guide).
-  - Contributed a sample dataset accessible via the web UI.
 
 - **Luca Croci**:
   - Led the visual design of the website.
