@@ -96,10 +96,10 @@ We have a mix of white-box and black-box testing.
 
 ## Time and space complexity
 
-| **Time complexity** |                  |
-| ------------------- | ---------------: |
-| Average             | $O(n \: log(n))$ |
-| Worst case          |         $O(n^2)$ |
+| **Time complexity** |               |
+| ------------------- | ------------: |
+| Average             | $O(n log(n))$ |
+| Worst case          |      $O(n^2)$ |
 
 On average, the time complexity of the Quickhull algorithm is $O(n \: log(n))$,
 with $n$ being the number of points. However, certain configurations of inputs
