@@ -23,6 +23,7 @@ The website is live at
   python3 -m venv venv
   source venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
   pip install -r requirements.txt
+  cd web
   python3 -m http.server
   ```
 

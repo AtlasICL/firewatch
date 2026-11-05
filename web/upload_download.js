@@ -18,7 +18,7 @@ export async function uploadDownloadFile(
   const presignUploadResponse = await fetch(apiEndpoint + "/generate_url", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ filename: file.name }),
+    body: JSON.stringify({ filename: "file.csv" }),
   });
 
   if (!presignUploadResponse.ok) {
