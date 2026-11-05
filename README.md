@@ -342,12 +342,15 @@ limitations:
   - Led the visual design of the website.
   - Created a landing page.
   - Implemented UX improvements, including waiting indicators.
+  - Contributed a sample dataset accessible via the web UI.
 
 - **Luca Pacitti**:
   - Implemented foundational testing framework, including setup and teardown
     logic.
-  - Wrote metamorphic, large input, and random input tests
+  - Wrote metamorphic, large input, and random input tests.
+  - Wrote integration tests for workflows between major system components.
   - Fixed bugs in algorithm validation.
+  - Contributed a sample dataset accessible via the web UI.
 
 - **Harry Taylor**:
   - Designed, implemented, and automated the deployment on AWS.
@@ -358,6 +361,7 @@ limitations:
   - Implemented settlement detection in JavaScript.
   - Added performance improvements to csv parsing, namely moving away from the
     pandas Python library to reduce memory usage.
+  - Contributed a sample dataset accessible via the web UI.
 
 - **Jack Wyatt**:
   - Implemented foundational testing framework, including setup and teardown
@@ -366,6 +370,7 @@ limitations:
   - Wrote large input and random input tests.
   - Fixed bugs on the core algorithm.
   - Added input data validation (real coordinate validation etc...).
+  - Contributed a sample dataset accessible via the web UI.
 
 ## Acknowledgment of generative AI use
 
