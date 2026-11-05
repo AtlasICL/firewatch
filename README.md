@@ -10,6 +10,7 @@
 ---
 
 ## Table of contents
+
 - [Deployed URL](#url)
 - [Install](#install)
 - [Testing](#testing)
@@ -29,9 +30,6 @@
 - [Limitations](#limitations)
 - [Individual Contributions](#individual-contributions)
 - [Acknowledgment of generative AI use](#acknowledgment-of-generative-ai-use)
-
-
-
 
 ## Deployed URL
 
