@@ -7,7 +7,33 @@
 | **Problem statement**  | Given a set of raw coordinate data from fire monitoring satellites, identify the convex hull (which represents the surface area at risk) |
 | **Intended users**     | Fire departments in affected areas, wildfire researchers                                                                                 |
 
-## URL
+---
+
+## Table of contents
+- [Deployed URL](#url)
+- [Install](#install)
+- [Testing](#testing)
+  - [macOS / Linux](#macos--linux)
+  - [Windows PowerShell](#windows-powershell)
+- [Pseudocode](#pseudocode)
+- [Time and space complexity](#time-and-space-complexity)
+- [Dependencies and third-party resources](#dependencies-and-third-party-resources)
+- [Test Cases](#test-cases)
+  - [Framework for testing](#framework-for-testing)
+  - [Hull Input](#hull-input)
+  - [Hull Examples](#hull-examples)
+  - [Hull Properties](#hull-properties)
+  - [Parser](#parser)
+  - [Benchmarking tests](#benchmarking-tests)
+  - [Results](#results)
+- [Limitations](#limitations)
+- [Individual Contributions](#individual-contributions)
+- [Acknowledgment of generative AI use](#acknowledgment-of-generative-ai-use)
+
+
+
+
+## Deployed URL
 
 The website is live at
 [satellitefirewatch.com](https://satellitefirewatch.com).
@@ -161,7 +187,7 @@ the test suite begins and remove them following its conclusion. The files in
 question are `large.csv`, a file too large to be stored permanently, and
 `random.csv`, which contains data which is randomised in-between runs.
 
-### Hull Input
+### `HullInput` and `Point`
 
 We test that the `HullInput` and `Point` classes accept valid inputs and reject
 invalid inputs to ensure that hulls can only be created using valid inputs.
@@ -180,7 +206,7 @@ invalid inputs to ensure that hulls can only be created using valid inputs.
   cases with two points and three points with one duplicate, as well as real
   sample data with more than two points.
 
-### Hull Examples
+### Convex hulls
 
 We test that our quickhull algorithm produces the expected outcome on a variety
 of hand-picked point sets:
@@ -198,7 +224,7 @@ of hand-picked point sets:
 - A convex hull will be created from a set of vertically collinear points.
 - A convex hull will be created from a set of floating points values
 
-### Hull Properties
+### Hull properties
 
 Metamorphic tests are implemented to verify that input alterations change or do
 not change the output as expected. We apply changes to a valid, real data mixed
@@ -337,7 +363,7 @@ TODO
   - Fixed bugs on the core algorithm.
   - Added input data validation (real coordinate validation etc...).
 
-### Acknowledgment of generative AI use
+## Acknowledgment of generative AI use
 
 Generative AI was used in this AI-assisted coursework. AI-generated output was
 not accepted uncritically, and our group remains responsible for the
