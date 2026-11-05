@@ -20,8 +20,8 @@ The website is live at
 - Try it out locally using:
 
   ```sh
-  python3 -m venv .venv
-  source .venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
+  python3 -m venv venv
+  source venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
   pip install -r requirements.txt
   cd web
   python3 -m http.server
