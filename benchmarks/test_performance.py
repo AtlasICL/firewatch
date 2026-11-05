@@ -3,9 +3,9 @@ import unittest
 
 from scipy.spatial import ConvexHull
 
+from benchmarks.benchmark_timing import benchmark
 from src.point import HullInput, Point
 from src.quickhull import quickhull
-from tests.unit.test_benchmark_timing import benchmark
 
 
 def points_to_tuple(points: list[Point]):

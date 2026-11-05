@@ -48,6 +48,7 @@ class TestParser(unittest.TestCase):
             "normal_bigger.csv": 14,
             "single_point.csv": 1,
             "skip_line.csv": 7,
+            "missing_some_dates.csv": 7,
             "triangle.csv": 3,
             "large.csv": 600_000,
         }
