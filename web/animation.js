@@ -22,4 +22,3 @@ next.addEventListener("click", () => {
 });
 
 showStep();
-
