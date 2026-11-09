@@ -619,3 +619,34 @@ main.page {
 .leaflet-control-layers-selector {
   accent-color: var(--accent);
 }
+
+#animationImage {
+  display: block;
+  width: 100%;
+  height: 55vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+}
+
+.animation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0 10px;
+}
+
+#stepCounter {
+  min-width: 60px;
+  color: var(--text-subtle);
+  font-size: 12px;
+  text-align: center;
+}
+
+.animation-card {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
