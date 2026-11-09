@@ -10,6 +10,7 @@ const terrain = L.tileLayer(
   "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
   {
     maxZoom: 19,
+    maxNativeZoom: 17,
     attribution:
       "&copy; OpenStreetMap contributors, SRTM | OpenTopoMap (CC-BY-SA)",
   },
