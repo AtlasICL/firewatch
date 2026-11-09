@@ -313,8 +313,8 @@ whereas scipy takes ~0.004s.
 
 ### End To End testing
 
-A report on end to end testing, which verifies that the website works as 
-intended can be found in 
+A report on end to end testing, which verifies that the website works as
+intended can be found in
 [the testing folder](/tests/resources/end_to_end_testing_report.pdf)
 
 ## Limitations
