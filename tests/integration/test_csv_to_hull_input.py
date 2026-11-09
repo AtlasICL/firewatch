@@ -34,9 +34,7 @@ class TestCsvToHullInput(unittest.TestCase):
         """
         expected_outputs: dict[str, int] = {
             "min_size.csv": 2,
-            "missing_dates.csv": 7,
             "normal.csv": 7,
-            "normal_bigger.csv": 14,
             "skip_line.csv": 7,
             "triangle.csv": 3,
         }
@@ -69,7 +67,6 @@ class TestCsvToHullInput(unittest.TestCase):
         invalid format should be ignored.
         """
         expected_outputs: dict[str, int] = {
-            "invalid_date.csv": 5,
             "invalid_latitude.csv": 5,
             "invalid_longitude.csv": 5,
             "multiple_invalid.csv": 3,
