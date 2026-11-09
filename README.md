@@ -311,6 +311,12 @@ execution time for average input size for both quickhull implementations is
 ~0.00004s, however for the larger input size case, ours clocks at ~0.002s
 whereas scipy takes ~0.004s.
 
+### End To End testing
+
+A report on end to end testing, which verifies that the website works as
+intended can be found in
+[the testing folder](/tests/resources/end_to_end_testing_report.pdf)
+
 ## Limitations
 
 While we are happy with the level of polish we were able to implement within
