@@ -34,18 +34,33 @@ function loadSettlementDataset() {
  * @returns {boolean} - true if the point is inside or on the hull.
  */
 export function isInsideConvexHull([lat, lng], hull) {
-  if (hull.length < 3) return false;
+  // We consider that a hull of 2 points has no area.
+  if (hull.length < 3) {
+    return false;
+  }
 
-  let sign = 0;
+  let sgn = 0;
+
   for (let i = 0; i < hull.length; i++) {
+    // Get coordinates for points.
     const [latitudeA, longitudeA] = hull[i];
     const [latitudeB, longitudeB] = hull[(i + 1) % hull.length];
+
+    // Calculate cross product.
     const cross_product =
       (latitudeB - latitudeA) * (lng - longitudeA) -
       (longitudeB - longitudeA) * (lat - latitudeA);
-    if (cross_product === 0) continue;
-    if (sign === 0) sign = Math.sign(cross_product);
-    else if (Math.sign(cross_product) !== sign) return false;
+
+    // Case that the point lies directly on an edge.
+    if (cross_product === 0) {
+      continue;
+    }
+
+    if (sgn === 0) {
+      sgn = Math.sign(cross_product);
+    } else if (Math.sign(cross_product) !== sgn) {
+      return false;
+    }
   }
   return true;
 }
@@ -105,10 +120,10 @@ export async function settlementsInRange(hullCoordinates) {
     pointToLayer: (feature, latlng) =>
       L.circleMarker(latlng, {
         radius: 5,
-        fillColor: "#0078A8",
+        fillColor: "#027dad",
         color: "#ffffff",
         weight: 1,
-        fillOpacity: 0.8,
+        fillOpacity: 0.85,
       }),
     onEachFeature: (feature, layer) => {
       layer.bindPopup(settlementPopup(feature.properties));
