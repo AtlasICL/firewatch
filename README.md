@@ -356,6 +356,7 @@ limitations:
   - Wrote metamorphic, large input, and random input tests.
   - Wrote integration tests for workflows between major system components.
   - Fixed bugs in algorithm validation.
+  - Created visuals for the quickhull algorithm animation.
   - Contributed a sample dataset accessible via the web UI.
 
 - **Harry Taylor**:
