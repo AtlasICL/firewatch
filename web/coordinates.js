@@ -36,7 +36,6 @@ export function parseCoordinatesFrom(csvString) {
     if (inBounds) {
       coordinates.push([latitude, longitude]);
     }
-    
   }
   return coordinates;
 }
