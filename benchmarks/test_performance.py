@@ -1,9 +1,12 @@
 import random as r
 import unittest
+import numpy as np
 
 from scipy.spatial import ConvexHull
+from pathlib import Path
 
 from benchmarks.benchmark_timing import benchmark
+from benchmarks.run_lambda import run_lambda
 from src.point import HullInput, Point
 from src.quickhull import quickhull
 
@@ -57,7 +60,7 @@ class TestPerformance(unittest.TestCase):
 
     def test_our_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
-        for p in range(100):
+        for _ in range(100):
             x, y = r.randint(-180, 180), r.randint(-90, 90)
             input_points.append(Point(x, y))
 
@@ -66,9 +69,14 @@ class TestPerformance(unittest.TestCase):
 
     def test_scipy_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
-        for p in range(100):
+        for _ in range(100):
             x, y = r.randint(-90, 90), r.randint(-180, 180)
             input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
         benchmark(quickhull, hull_input)
+
+    def test_lambda_performance(self):
+        csv_path: Path = Path(__file__).resolve().parent.parent \
+            / "tests" / "resources" / "valid_csv_files" / "normal.csv"
+        benchmark(run_lambda, csv_path, 20)
