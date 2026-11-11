@@ -4,11 +4,14 @@ from pathlib import Path
 import requests
 
 RESOURCES: Path = Path(__file__).resolve().parent.parent / "resources"
-TRANSFER_URL: str = "https://xnyu0pnd88.execute-api.eu-north-1" \
-                " .amazonaws.com/generate_url"
+TRANSFER_URL: str = (
+    "https://xnyu0pnd88.execute-api.eu-north-1 .amazonaws.com/generate_url"
+)
 
-QUICKHULL_URL: str = "https://xnyu0pnd88.execute-api.eu-north-1" \
-                ".amazonaws.com/quickhull_download"
+QUICKHULL_URL: str = (
+    "https://xnyu0pnd88.execute-api.eu-north-1"
+    ".amazonaws.com/quickhull_download"
+)
 
 
 class TestLambda(unittest.TestCase):
@@ -79,9 +82,7 @@ class TestLambda(unittest.TestCase):
             f"Failed to download from S3 {download_res.text}",
         )
 
-        actual_text: str = (
-            download_res.text.strip().replace("\r\n", "\n")
-        )
+        actual_text: str = download_res.text.strip().replace("\r\n", "\n")
 
         expected_text: str = (
             "51.5212,-3.6538\n"

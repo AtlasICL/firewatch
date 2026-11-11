@@ -1,9 +1,8 @@
 import random as r
 import unittest
-import numpy as np
+from pathlib import Path
 
 from scipy.spatial import ConvexHull
-from pathlib import Path
 
 from benchmarks.benchmark_timing import benchmark
 from benchmarks.run_lambda import run_lambda
@@ -77,6 +76,11 @@ class TestPerformance(unittest.TestCase):
         benchmark(quickhull, hull_input)
 
     def test_lambda_performance(self):
-        csv_path: Path = Path(__file__).resolve().parent.parent \
-            / "tests" / "resources" / "valid_csv_files" / "normal.csv"
+        csv_path: Path = (
+            Path(__file__).resolve().parent.parent
+            / "tests"
+            / "resources"
+            / "valid_csv_files"
+            / "normal.csv"
+        )
         benchmark(run_lambda, csv_path, 20)
