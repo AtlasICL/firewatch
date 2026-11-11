@@ -39,6 +39,27 @@ class TestCsvToQuickhull(HullTestCase):
                 Point(53.9859, -0.3971),
                 Point(53.9485, -0.4172),
             ],
+            "alternate_format.csv": [
+                Point(51.5212, -3.6538),
+                Point(51.5231, -3.6689),
+                Point(54.8854, -6.7712),
+                Point(55.5915, -3.6380),
+                Point(53.5676, -0.5981),
+            ],
+            "bonus_field.csv": [
+                Point(51.5212, -3.6538),
+                Point(53.569, -0.5875),
+                Point(55.5915, -3.6387),
+                Point(54.8854, -6.7712),
+                Point(51.5231, -3.6689),
+            ],
+            "mixed_format.csv": [
+                Point(51.5212, -3.6538),
+                Point(53.569, -0.5875),
+                Point(55.5915, -3.6387),
+                Point(54.8854, -6.7712),
+                Point(51.5231, -3.6689),
+            ],
         }
         for name, expected_quickhull in expected_outputs.items():
             with self.subTest(file=name):

@@ -17,11 +17,8 @@ class TestCsvToHullInput(unittest.TestCase):
         Although a CSV file with less than two distinct points may be of
         valid format, it should be rejected by HullInput.
         """
-        expected_outputs: dict[str, int] = {
-            "empty.csv": 0,
-            "single_point.csv": 1,
-        }
-        for name, expected_length in expected_outputs.items():
+        expected_outputs = ["empty.csv", "single_point.csv"]
+        for name in expected_outputs:
             with self.subTest(file=name):
                 path = valid_files / name
                 with self.assertRaises(ValueError):
@@ -33,6 +30,9 @@ class TestCsvToHullInput(unittest.TestCase):
         number of lines in the CSV file.
         """
         expected_outputs: dict[str, int] = {
+            "alternate_format.csv": 6,
+            "bonus_field.csv": 7,
+            "mixed_format.csv": 7,
             "min_size.csv": 2,
             "normal.csv": 7,
             "skip_line.csv": 7,
@@ -51,10 +51,8 @@ class TestCsvToHullInput(unittest.TestCase):
         should be rejected by HullInput if there are less than two
         distinct points of a valid format.
         """
-        expected_outputs: dict[str, int] = {
-            "all_lines_invalid.csv": 0,
-        }
-        for name, expected_length in expected_outputs.items():
+        expected_outputs = ["all_lines_invalid.csv"]
+        for name in expected_outputs:
             with self.subTest(file=name):
                 path = out_of_bounds_files / name
                 with self.assertRaises(ValueError):
