@@ -11,8 +11,9 @@
 
 ## Table of contents
 
-- [Deployed URL](#url)
-- [Install](#install)
+- [Deployed URL](#deployed-url)
+- [Website Deployment](#website-deployment)
+- [Backend Deployment](#backend-deployment)
 - [Testing](#testing)
   - [macOS / Linux](#macos--linux)
   - [Windows PowerShell](#windows-powershell)
@@ -21,12 +22,13 @@
 - [Dependencies and third-party resources](#dependencies-and-third-party-resources)
 - [Test Cases](#test-cases)
   - [Framework for testing](#framework-for-testing)
-  - [Hull Input](#hull-input)
-  - [Hull Examples](#hull-examples)
-  - [Hull Properties](#hull-properties)
+  - [`HullInput` and `Point`](#hullinput-and-point)
+  - [Convex hulls](#convex-hulls)
+  - [Hull properties](#hull-properties)
   - [Parser](#parser)
   - [Benchmarking tests](#benchmarking-tests)
   - [Results](#results)
+  - [End to end testing](#end-to-end-testing)
 - [Limitations](#limitations)
 - [Individual Contributions](#individual-contributions)
 - [Acknowledgment of generative AI use](#acknowledgment-of-generative-ai-use)
@@ -38,7 +40,7 @@ The website is live at
 
 ## Website Deployment
 
-- The website frontend is hosted on CloudFlare.
+- The website frontend is hosted on Cloudflare.
 - For running locally, the only requirement is a Python runtime (3.12+).
 - Try it out locally using:
 
@@ -53,6 +55,7 @@ The website is live at
   And then visit <http://localhost:8000>.
 
 ## Backend Deployment
+
 ```mermaid
 flowchart LR
     user(["Visitor's browser"])
@@ -91,9 +94,10 @@ flowchart LR
 ```
 
 - The website is hosted on AWS, using S3 for file storage and Lambdas for
-serverless compute.
-- The repository comes equipped with cdk code for easy infrastructure as code (IAC) deployment
-for backend lambda functions, s3 upload bucket and API gateway.
+  serverless compute.
+- The repository comes equipped with cdk code for easy infrastructure as code
+  (IAC) deployment for backend lambda functions, s3 upload bucket and API
+  gateway.
 - To install dependencies:
 
   ```sh
@@ -104,6 +108,7 @@ for backend lambda functions, s3 upload bucket and API gateway.
   curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
   # (or irm https://awscli.amazonaws.com/v2/install.ps1 | iex on Windows)
   ```
+
 - To deploy via CDK:
   ```sh
   aws login
@@ -332,7 +337,7 @@ execution time for average input size for both quickhull implementations is
 ~0.00004s, however for the larger input size case, ours clocks at ~0.002s
 whereas scipy takes ~0.004s.
 
-### End To End testing
+### End to end testing
 
 A report on end to end testing, which verifies that the website works as
 intended can be found in
