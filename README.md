@@ -36,10 +36,9 @@
 The website is live at
 [satellitefirewatch.com](https://satellitefirewatch.com).
 
-## Install
+## Website Deployment
 
-- The website is hosted on AWS, using S3 for file storage and Lambdas for
-  serverless compute.
+- The website frontend is hosted on CloudFlare.
 - For running locally, the only requirement is a Python runtime (3.12+).
 - Try it out locally using:
 
@@ -53,6 +52,7 @@ The website is live at
 
   And then visit <http://localhost:8000>.
 
+## Backend Deployment
 ```mermaid
 flowchart LR
     user(["Visitor's browser"])
@@ -89,6 +89,27 @@ flowchart LR
     apigw -- "5. returns presigned download URL" --> user
     user -- "6. GET hull CSV directly" --> s3
 ```
+
+- The website is hosted on AWS, using S3 for file storage and Lambdas for
+serverless compute.
+- The repository comes equipped with cdk code for easy infrastructure as code (IAC) deployment
+for backend lambda functions, s3 upload bucket and API gateway.
+- To install dependencies:
+
+  ```sh
+  python3 -m venv venv
+  source venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
+  pip install -r requirements.txt
+  npm install -g aws-cdk
+  curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+  # (or irm https://awscli.amazonaws.com/v2/install.ps1 | iex on Windows)
+  ```
+- To deploy via CDK:
+  ```sh
+  aws login
+  cdk bootstrap
+  cdk deploy --app "python3 infrastructure/app.py"
+  ```
 
 ## Testing
 
