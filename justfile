@@ -23,5 +23,11 @@ check:
 test:
     python3 -m unittest
 
+# Run the performance benchmarks
 perf:
-    python3 -m unittest discover -s benchmarks -p "test_*.py"
+    python3 -m unittest discover -s benchmarks -p "test_*.py"; \
+    status=$?; \
+    echo "\n"; \
+    cat benchmarks/benchmark_output.txt; \
+    echo "\n"; \
+    exit $status
