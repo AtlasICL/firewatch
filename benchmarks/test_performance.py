@@ -1,9 +1,11 @@
 import random as r
 import unittest
+from pathlib import Path
 
 from scipy.spatial import ConvexHull
 
 from benchmarks.benchmark_timing import benchmark
+from benchmarks.run_lambda import run_lambda
 from src.point import HullInput, Point
 from src.quickhull import quickhull
 
@@ -19,6 +21,17 @@ SciPy, using several performance benchmarks.
 
 
 class TestPerformance(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.file_path = (
+            Path(__file__).resolve().parent / "benchmark_output.txt"
+        )
+        cls.file_path.write_text("--- Performance Benchmark Results ---\n")
+
+    def _save_result(self, test_name: str, mean_time):
+        with open(self.file_path, "a") as f:
+            f.write(f"{test_name}: {mean_time:.6f} seconds\n")
+
     def test_our_performance_on_average_input_size(self):
         input_points: tuple[Point, ...] = []
         for x in range(10):
@@ -26,7 +39,8 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
-        benchmark(ConvexHull, tuple_input)
+        mean_time = benchmark(ConvexHull, tuple_input)
+        self._save_result("our_performance_on_average", mean_time)
 
     def test_scipy_performance_on_average_input_size(self):
         input_points: tuple[Point, ...] = []
@@ -35,7 +49,8 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
-        benchmark(quickhull, hull_input)
+        mean_time = benchmark(quickhull, hull_input)
+        self._save_result("scipy_performance_on_average", mean_time)
 
     def test_our_performance_on_large_input_size(self):
         input_points: tuple[Point, ...] = []
@@ -44,7 +59,8 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
-        benchmark(ConvexHull, tuple_input)
+        mean_time = benchmark(ConvexHull, tuple_input)
+        self._save_result("our_performance_on_large", mean_time)
 
     def test_scipy_performance_on_large_input_size(self):
         input_points: tuple[Point, ...] = []
@@ -53,22 +69,36 @@ class TestPerformance(unittest.TestCase):
                 input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
-        benchmark(quickhull, hull_input)
+        mean_time = benchmark(quickhull, hull_input)
+        self._save_result("scipy_performance_on_average", mean_time)
 
     def test_our_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
-        for p in range(100):
+        for _ in range(100):
             x, y = r.randint(-180, 180), r.randint(-90, 90)
             input_points.append(Point(x, y))
 
         tuple_input = points_to_tuple(input_points)
-        benchmark(ConvexHull, tuple_input)
+        mean_time = benchmark(ConvexHull, tuple_input)
+        self._save_result("our_performance_on_random", mean_time)
 
     def test_scipy_performance_on_random_inputs(self):
         input_points: tuple[Point, ...] = []
-        for p in range(100):
+        for _ in range(100):
             x, y = r.randint(-90, 90), r.randint(-180, 180)
             input_points.append(Point(x, y))
 
         hull_input = HullInput(input_points)
-        benchmark(quickhull, hull_input)
+        mean_time = benchmark(quickhull, hull_input)
+        self._save_result("scipy_performance_on_random", mean_time)
+
+    def test_lambda_performance(self):
+        csv_path: Path = (
+            Path(__file__).resolve().parent.parent
+            / "tests"
+            / "resources"
+            / "valid_csv_files"
+            / "normal.csv"
+        )
+        mean_time = benchmark(run_lambda, csv_path, 20)
+        self._save_result("lambda_performance_on_average", mean_time)
