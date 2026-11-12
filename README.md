@@ -11,8 +11,9 @@
 
 ## Table of contents
 
-- [Deployed URL](#url)
-- [Install](#install)
+- [Deployed URL](#deployed-url)
+- [Website Deployment](#website-deployment)
+- [Backend Deployment](#backend-deployment)
 - [Testing](#testing)
   - [macOS / Linux](#macos--linux)
   - [Windows PowerShell](#windows-powershell)
@@ -21,12 +22,13 @@
 - [Dependencies and third-party resources](#dependencies-and-third-party-resources)
 - [Test Cases](#test-cases)
   - [Framework for testing](#framework-for-testing)
-  - [Hull Input](#hull-input)
-  - [Hull Examples](#hull-examples)
-  - [Hull Properties](#hull-properties)
+  - [`HullInput` and `Point`](#hullinput-and-point)
+  - [Convex hulls](#convex-hulls)
+  - [Hull properties](#hull-properties)
   - [Parser](#parser)
   - [Benchmarking tests](#benchmarking-tests)
   - [Results](#results)
+  - [End to end testing](#end-to-end-testing)
 - [Limitations](#limitations)
 - [Individual Contributions](#individual-contributions)
 - [Acknowledgment of generative AI use](#acknowledgment-of-generative-ai-use)
@@ -36,22 +38,22 @@
 The website is live at
 [satellitefirewatch.com](https://satellitefirewatch.com).
 
-## Install
+## Website Deployment
 
-- The website is hosted on AWS, using S3 for file storage and Lambdas for
-  serverless compute.
-- For running locally, the only requirement is a Python runtime (3.12+).
-- Try it out locally using:
+- The website frontend is hosted on Cloudflare.
+- For running locally, the only requirement is a Python runtime (3.12+). Try it
+  out locally using:
 
   ```sh
-  python3 -m venv venv
-  source venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
-  pip install -r requirements.txt
   cd web
   python3 -m http.server
   ```
 
   And then visit <http://localhost:8000>.
+
+> Note that the locally served site still uses the deployed backend API.
+
+## Backend Deployment
 
 ```mermaid
 flowchart LR
@@ -63,7 +65,7 @@ flowchart LR
     end
 
     subgraph AWS["AWS eu-north-1"]
-        apigw["API Gateway<br/>HTTP API"]
+        apigw["API Gateway<br/>REST API"]
         transfer["Lambda<br/>src.transfer_lambda.generate_url"]
         qh["Lambda<br/>src.quickhull_lambda.lambda_handler"]
         s3[("S3<br/>s3-upload-bucket-firewatch")]
@@ -90,6 +92,29 @@ flowchart LR
     user -- "6. GET hull CSV directly" --> s3
 ```
 
+- The backend is hosted on AWS, using S3 for file storage and Lambdas for
+  serverless compute.
+- The repository comes equipped with cdk code for easy infrastructure as code
+  (IAC) deployment for backend lambda functions, s3 upload bucket and API
+  gateway.
+- To install dependencies:
+
+  ```sh
+  python3 -m venv venv
+  source venv/bin/activate # (or ./venv/Scripts/Activate.ps1 on Windows)
+  pip install -r infrastructure/requirements.txt
+  npm install -g aws-cdk
+  curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+  # (or irm https://awscli.amazonaws.com/v2/install.ps1 | iex on Windows)
+  ```
+
+- To deploy via CDK, run the following from the repo root:
+  ```sh
+  aws login
+  cdk bootstrap --app "python3 infrastructure/app.py"
+  cdk deploy --app "python3 infrastructure/app.py"
+  ```
+
 ## Testing
 
 Install the development dependencies, then run our Python test suite using
@@ -107,7 +132,7 @@ python3 -m unittest
 
 ```sh
 python -m venv venv
-.venv/bin/Scripts/Activate.ps1
+./venv/Scripts/Activate.ps1
 pip install -r requirements-dev.txt
 python -m unittest
 ```
@@ -311,7 +336,7 @@ execution time for average input size for both quickhull implementations is
 ~0.00004s, however for the larger input size case, ours clocks at ~0.002s
 whereas scipy takes ~0.004s.
 
-### End To End testing
+### End to end testing
 
 A report on end to end testing, which verifies that the website works as
 intended can be found in
