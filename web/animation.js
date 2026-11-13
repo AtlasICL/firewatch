@@ -1,4 +1,3 @@
-
 const image = document.getElementById("animationImage");
 const counter = document.getElementById("stepCounter");
 const previous = document.getElementById("previousButton");
