@@ -289,29 +289,23 @@ Valid cases:
 
 - An empty CSV file
 - A CSV with two points
-- A CSV with valid latitude and longitude, but missing dates
 - A CSV with an average number of valid lines
-- A bigger CSV with an average number of valid lines
+- CSV ending lines without commas
 - A CSV with a single point
 - A CSV with one empty line partway through
 - A CSV with three points
-- A large csv (roughly 10MB)
-- A CSV containing random, in-bounds data
+- A CSV with a mixed format, ending lines with both ',' and ''
+- A large csv (roughly 10MB) containing random, in-bounds data
 
 Invalid Cases:
 
 - A CSV populated with non-numeric values
-- A CSV with a date field using an incorrect format (not dd/mm/yyyy)
-- A CSV with an invalid date
-- A CSV with a boundary invalid date; a leap day on a non-leap year
 - A CSV missing its longitude field
-- A CSV where one element misses longitude
 - A CSV with lines missing commas
 - A file with the wrong file type - zip file not CSV.
 
 Out-Of-Bounds Cases:
 
-- A CSV with dates in the future and before satellite data was made available
 - A CSV with latitude < -90
 - A CSV with longitude > 180 and longitude < -180
 - A CSV with multiple out-of-bounds fields in different lines
@@ -403,6 +397,7 @@ limitations:
   - Fixed bugs on the core algorithm.
   - Added input data validation (real coordinate validation etc...).
   - Contributed a sample dataset accessible via the web UI.
+  - Wrote README and e2e testing reports
 
 ## Acknowledgment of generative AI use
 

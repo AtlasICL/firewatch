@@ -22,17 +22,8 @@ def setup():
         large_writer = csv.writer(large_file)
         for line in range(600_000):  # 10MB
             long, lat = rng.randint(-180, 180), rng.randint(-90, 90)
-            (
-                day,
-                month,
-                year,
-            ) = (
-                rng.randint(1, 28),
-                rng.randint(1, 12),
-                rng.randint(2001, 2025),
-            )
 
-            large_writer.writerow([lat, long, f"{day}/{month}/{year}"])
+            large_writer.writerow([lat, long])
 
 
 def teardown():

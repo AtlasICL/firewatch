@@ -28,7 +28,14 @@ export function parseCoordinatesFrom(csvString) {
         `Invalid coordinate csv on line ${index + 1}:\n"${line}"`,
       );
     }
-    coordinates.push([latitude, longitude]);
+    const inBounds =
+      latitude >= -90 &&
+      latitude <= 90 &&
+      longitude >= -180 &&
+      longitude <= 180;
+    if (inBounds) {
+      coordinates.push([latitude, longitude]);
+    }
   }
   return coordinates;
 }

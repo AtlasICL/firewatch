@@ -43,13 +43,13 @@ class TestParser(unittest.TestCase):
         expected_counts: dict[str, int] = {
             "empty.csv": 0,
             "min_size.csv": 2,
-            "missing_dates.csv": 7,
             "normal.csv": 7,
-            "normal_bigger.csv": 14,
             "single_point.csv": 1,
             "skip_line.csv": 7,
-            "missing_some_dates.csv": 7,
             "triangle.csv": 3,
+            "alternate_format.csv": 6,
+            "bonus_field.csv": 7,
+            "mixed_format.csv": 7,
             "large.csv": 600_000,
         }
         valid_files: Path = RESOURCES / "valid_csv_files"
@@ -66,7 +66,6 @@ class TestParser(unittest.TestCase):
         """
         expected_counts: dict[str, int] = {
             "all_lines_invalid.csv": 0,
-            "invalid_date.csv": 5,
             "invalid_latitude.csv": 5,
             "invalid_longitude.csv": 5,
             "multiple_invalid.csv": 3,

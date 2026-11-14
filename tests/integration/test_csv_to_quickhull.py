@@ -20,28 +20,12 @@ class TestCsvToQuickhull(HullTestCase):
         """
         expected_outputs: dict[str, list[Point]] = {
             "min_size.csv": [Point(54.3561, -0.5948), Point(54.3657, -0.6007)],
-            "missing_dates.csv": [
-                Point(51.5212, -3.6538),
-                Point(51.5231, -3.6689),
-                Point(54.8854, -6.7712),
-                Point(55.5915, -3.6387),
-                Point(53.5690, -0.5875),
-            ],
             "normal.csv": [
                 Point(51.5212, -3.6538),
                 Point(51.5231, -3.6689),
                 Point(54.8854, -6.7712),
                 Point(55.5915, -3.6387),
                 Point(53.5690, -0.5875),
-            ],
-            "normal_bigger.csv": [
-                Point(50.8309, -1.3614),
-                Point(51.8069, -3.1844),
-                Point(56.0002, -3.6935),
-                Point(57.4920, -3.2122),
-                Point(54.3657, -0.6007),
-                Point(54.3561, -0.5948),
-                Point(51.2047, -0.5329),
             ],
             "skip_line.csv": [
                 Point(51.5212, -3.6538),
@@ -54,6 +38,27 @@ class TestCsvToQuickhull(HullTestCase):
                 Point(53.9952, -0.3921),
                 Point(53.9859, -0.3971),
                 Point(53.9485, -0.4172),
+            ],
+            "alternate_format.csv": [
+                Point(51.5212, -3.6538),
+                Point(51.5231, -3.6689),
+                Point(54.8854, -6.7712),
+                Point(55.5915, -3.6380),
+                Point(53.5676, -0.5981),
+            ],
+            "bonus_field.csv": [
+                Point(51.5212, -3.6538),
+                Point(53.569, -0.5875),
+                Point(55.5915, -3.6387),
+                Point(54.8854, -6.7712),
+                Point(51.5231, -3.6689),
+            ],
+            "mixed_format.csv": [
+                Point(51.5212, -3.6538),
+                Point(53.569, -0.5875),
+                Point(55.5915, -3.6387),
+                Point(54.8854, -6.7712),
+                Point(51.5231, -3.6689),
             ],
         }
         for name, expected_quickhull in expected_outputs.items():
@@ -71,11 +76,6 @@ class TestCsvToQuickhull(HullTestCase):
         the data of a valid format.
         """
         expected_outputs: dict[str, int] = {
-            "invalid_date.csv": [
-                Point(51.5231, -3.6689),
-                Point(55.5915, -3.6387),
-                Point(53.5690, -0.5875),
-            ],
             "invalid_latitude.csv": [
                 Point(51.5212, -3.6538),
                 Point(51.5231, -3.6689),

@@ -1,5 +1,4 @@
 import csv
-from datetime import datetime as dt
 from pathlib import Path
 
 from src.point import Point
@@ -37,16 +36,6 @@ class Parser:
                     )
                     and (  # Longitude
                         float(row[1]) <= 180 and float(row[1]) >= -180
-                    )
-                    and (
-                        (len(row) < 3 or row[2] == "")
-                        or (
-                            (  # Date format: dd/mm/yyyy
-                                dt.strptime(row[2], "%d/%m/%Y")
-                                >= dt(2000, 10, 1)
-                            )
-                            and (dt.strptime(row[2], "%d/%m/%Y") <= dt.now())
-                        )
                     )
                 )
         except Exception as e:
