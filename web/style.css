@@ -628,6 +628,14 @@ main.page {
   border-radius: var(--radius);
 }
 
+.animation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0 10px;
+}
+
 .animation-controls button {
   flex: 0 0 auto;
   min-width: 120px;

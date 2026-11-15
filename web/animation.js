@@ -23,7 +23,13 @@ previous.addEventListener("click", () => {
   showStep();
 });
 
-next.addEventListener("click", nextStep);
+next.addEventListener("click", () => {
+  clearInterval(timer);
+  timer = null;
+  autoplayButton.textContent = "Autoplay: OFF";
+
+  nextStep();
+});
 
 autoplayButton.addEventListener("click", () => {
   if (timer) {
@@ -37,4 +43,3 @@ autoplayButton.addEventListener("click", () => {
 });
 
 showStep();
-timer = setInterval(nextStep, 2000);
