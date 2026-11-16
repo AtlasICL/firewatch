@@ -37,11 +37,11 @@ next.addEventListener("click", () => {
 
 autoplayToggle.addEventListener("change", () => {
   if (autoplayToggle.checked) {
-    timer = setInterval(nextStep, 2000);
+    timer = setInterval(nextStep, 1500);
   } else {
     stopAutoplay();
   }
 });
 
 showStep();
-timer = setInterval(nextStep, 2000);
+timer = setInterval(nextStep, 1500);
