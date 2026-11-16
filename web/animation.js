@@ -2,7 +2,7 @@ const image = document.getElementById("animationImage");
 const counter = document.getElementById("stepCounter");
 const previous = document.getElementById("previousButton");
 const next = document.getElementById("nextButton");
-const autoplayButton = document.getElementById("autoplayButton");
+const autoplayToggle = document.getElementById("autoplayToggle");
 
 let step = 1;
 let timer = null;
@@ -18,28 +18,30 @@ function nextStep() {
   showStep();
 }
 
+function stopAutoplay() {
+  clearInterval(timer);
+  timer = null;
+  autoplayToggle.checked = false;
+}
+
 previous.addEventListener("click", () => {
+  stopAutoplay();
   step = step === 1 ? 16 : step - 1;
   showStep();
 });
 
 next.addEventListener("click", () => {
-  clearInterval(timer);
-  timer = null;
-  autoplayButton.textContent = "Autoplay: OFF";
-
+  stopAutoplay();
   nextStep();
 });
 
-autoplayButton.addEventListener("click", () => {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-    autoplayButton.textContent = "Autoplay: OFF";
-  } else {
+autoplayToggle.addEventListener("change", () => {
+  if (autoplayToggle.checked) {
     timer = setInterval(nextStep, 2000);
-    autoplayButton.textContent = "Autoplay: ON";
+  } else {
+    stopAutoplay();
   }
 });
 
 showStep();
+timer = setInterval(nextStep, 2000);

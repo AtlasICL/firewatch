@@ -670,18 +670,53 @@ main.page {
   border-radius: var(--radius);
 }
 
-#autoplayButton {
-  flex: 0 0 auto;
-  padding: 10px 16px;
-  background: var(--surface);
+
+.autoplay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-family: inherit;
+  font-size: 12px;
   cursor: pointer;
 }
 
-#autoplayButton:hover {
-  background: var(--surface-hover);
-  border-color: var(--accent);
+.autoplay-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.autoplay-toggle input:checked + .toggle-slider {
+  background: var(--accent);
+}
+
+.autoplay-toggle input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.autoplay-toggle input:focus-visible + .toggle-slider {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
 }
