@@ -375,8 +375,10 @@ limitations:
   - Implemented UX improvements, including waiting indicators.
   - Improved CSV input validation with custom error messages.
   - Contributed a sample dataset accessible via the web UI.
-  - Customised Leaflet map controls, popups and map layers to improve usability.
-  - Developed an interactive Quickhull animation with manual navigation and an autoplay toggle.
+  - Customised Leaflet map controls, popups and map layers to improve
+    usability.
+  - Developed an interactive Quickhull animation with manual navigation and an
+    autoplay toggle.
 
 - **Luca Pacitti**:
   - Implemented foundational testing framework, including setup and teardown
